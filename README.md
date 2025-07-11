@@ -1,1 +1,1 @@
-![Nina](readme_media/nina_mirroring.png)
+![Nina](readme_media/nina_downsample.png)
