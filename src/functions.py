@@ -80,19 +80,27 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     
     y, x = np.where(cam_frame == 255)
     if len(x) == 0 or len(y) == 0:
-        return frame_vizualizer,None
+        return frame_vizualizer,(0,1,0,1)
 
     x_min, x_max = np.min(x), np.max(x)
     y_min, y_max = np.min(y), np.max(y)
 
-    frame_vizualizer[y_min:y_max+1, x_min] = [255,0,255]  
-    frame_vizualizer[y_min:y_max+1, x_max] = [255,0,255]  
-    frame_vizualizer[y_min, x_min:x_max+1] = [255,0,255]  
-    frame_vizualizer[y_max, x_min:x_max+1] = [255,0,255]  
+    frame_vizualizer[y_min:y_max+1, x_min] = [255,0,150]  
+    frame_vizualizer[y_min:y_max+1, x_max] = [255,0,150]  
+    frame_vizualizer[y_min, x_min:x_max+1] = [255,0,150]  
+    frame_vizualizer[y_max, x_min:x_max+1] = [255,0,150]  
 
     return frame_vizualizer,(x_min//division,(x_max-division +1)//division,y_min//division,(y_max-division+1)//division)
 
+###################################################|Função de Gradeamento|###########################################################
+def grid(cam_frame):
+    cam_frame = cam_frame.copy()
 
+    cam_frame[:,np.r_[160,320,480],:] = [255,0,150]
+    cam_frame[160,160:480,:] = [255,0,150]
+    cam_frame[240,np.r_[0:160,480:640],:] = [255,0,150]
+
+    return cam_frame
 ##################################################| D E S C O N T I N U A D A S |###################################################
 
 #Função Target(Descontinuada)
