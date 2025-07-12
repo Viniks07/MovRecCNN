@@ -2,7 +2,8 @@ import numpy as np
 import time
 
 #############################################|Função de espelhamento da imagem|#####################################################
-mirroring = lambda cam_frame: cam_frame[:,::-1,:]
+def mirroring(cam_frame):
+    return cam_frame[:,::-1,:].copy()
 
 #######################################|Função para a conversão em escala de cinza|#################################################
 def gray_scale(cam_frame):
@@ -65,7 +66,7 @@ def down_sampling(cam_frame,division= 16):
 
             down_sample[i // division, j // division] = block_mean
 
-    return (visualizer,down_sample)
+    return (down_sample,visualizer)
 
 ##################################################|Função Bounding Box|#############################################################
 def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
@@ -78,9 +79,12 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     if frame_vizualizer.ndim == 2:
         frame_vizualizer = np.stack([frame_vizualizer]*3, axis=-1)
     
+    if cam_frame.ndim != 2:
+        cam_frame = gray_scale(cam_frame).copy()
+    
     y, x = np.where(cam_frame == 255)
     if len(x) == 0 or len(y) == 0:
-        return frame_vizualizer,(0,0,0,0)
+        return (division, division, division, division),frame_vizualizer
 
     x_min, x_max = np.min(x), np.max(x)
     y_min, y_max = np.min(y), np.max(y)
@@ -90,7 +94,7 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     frame_vizualizer[y_min, x_min:x_max+1] = [255,0,150]  
     frame_vizualizer[y_max, x_min:x_max+1] = [255,0,150]  
 
-    return frame_vizualizer,(y_min//division,(y_max-division+1)//division,x_min//division,(x_max-division +1)//division)
+    return (y_min//division,(y_max-division+1)//division,x_min//division,(x_max-division +1)//division),frame_vizualizer
 
 ###################################################|Função de Gradeamento|###########################################################
 def grid(cam_frame):
