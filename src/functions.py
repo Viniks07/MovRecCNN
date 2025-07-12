@@ -67,6 +67,32 @@ def down_sampling(cam_frame,division= 16):
 
     return (visualizer,down_sample)
 
+##################################################|Função Bounding Box|#############################################################
+def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
+    
+    if frame_vizualizer is None:
+        frame_vizualizer = cam_frame.copy()
+    else:
+        frame_vizualizer = frame_vizualizer.copy()
+
+    if frame_vizualizer.ndim == 2:
+        frame_vizualizer = np.stack([frame_vizualizer]*3, axis=-1)
+    
+    y, x = np.where(cam_frame == 255)
+    if len(x) == 0 or len(y) == 0:
+        return frame_vizualizer,None
+
+    x_min, x_max = np.min(x), np.max(x)
+    y_min, y_max = np.min(y), np.max(y)
+
+    frame_vizualizer[y_min:y_max+1, x_min] = [255,0,255]  
+    frame_vizualizer[y_min:y_max+1, x_max] = [255,0,255]  
+    frame_vizualizer[y_min, x_min:x_max+1] = [255,0,255]  
+    frame_vizualizer[y_max, x_min:x_max+1] = [255,0,255]  
+
+    return frame_vizualizer,(x_min//division,(x_max-division +1)//division,y_min//division,(y_max-division+1)//division)
+
+
 ##################################################| D E S C O N T I N U A D A S |###################################################
 
 #Função Target(Descontinuada)
