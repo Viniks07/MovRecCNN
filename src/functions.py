@@ -65,6 +65,9 @@ def down_sampling(cam_frame,division= 16):
             visualizer[i:i+division, j:j+division] = block_mean
 
             down_sample[i // division, j // division] = block_mean
+    
+    visualizer = visualizer.astype(np.uint8)
+    down_sample = down_sample.astype(np.uint8)
 
     return (down_sample,visualizer)
 
@@ -89,11 +92,11 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     x_min, x_max = np.min(x), np.max(x)
     y_min, y_max = np.min(y), np.max(y)
 
-    frame_vizualizer[y_min:y_max+1, x_min] = [255,0,150]  
-    frame_vizualizer[y_min:y_max+1, x_max] = [255,0,150]  
-    frame_vizualizer[y_min, x_min:x_max+1] = [255,0,150]  
-    frame_vizualizer[y_max, x_min:x_max+1] = [255,0,150]  
-
+    frame_vizualizer[y_min:y_max+1, x_min] = [255,0,150] #Esquerda 
+    frame_vizualizer[y_min:y_max+1, x_max] = [255,0,150] #Direita 
+    frame_vizualizer[y_min, x_min:x_max+1] = [255,0,150] #Cima
+    frame_vizualizer[y_max, x_min:x_max+1] = [255,0,150] #Baixo
+#               CIMA               BAIXO                      
     return (y_min//division,(y_max-division+1)//division,x_min//division,(x_max-division +1)//division),frame_vizualizer
 
 ###################################################|Função de Gradeamento|###########################################################
@@ -105,6 +108,42 @@ def grid(cam_frame):
     cam_frame[240,np.r_[0:160,480:640],:] = [255,255,255]
 
     return cam_frame
+
+##################################################|Função de Vetorização|###########################################################
+def vectorize(sample, bbox_points, division= 16):
+
+    cut_image = sample[bbox_points[0]:bbox_points[1], bbox_points[2]:bbox_points[3]]
+    somas = np.sum(cut_image, axis=0)
+
+    if np.any(somas > 0):
+        center_points = np.argmax(somas)
+
+        total_width_length = 640 // division 
+        target_center = total_width_length // 2
+
+        left_length = center_points
+        right_length = (cut_image.shape[1]) - center_points
+
+        pad_left = target_center - left_length
+        pad_right = total_width_length - target_center - right_length
+
+        vector = np.pad(
+            cut_image,
+            pad_width=(
+                (abs((480 // division) - cut_image.shape[0]), 0),
+                (abs(pad_left), abs(pad_right))
+            ),
+            mode='constant',
+            constant_values=0
+        )
+
+        vector = vector // 255
+
+        vector = vector.flatten()
+    else:
+        vector = np.zeros((480 // division, 640 // division), dtype=np.uint8)
+    return vector
+
 ##################################################| D E S C O N T I N U A D A S |###################################################
 
 #Função Target(Descontinuada)
