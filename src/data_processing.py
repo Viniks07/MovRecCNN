@@ -1,27 +1,27 @@
 import numpy as np
 import time
 
-#############################################|Função de espelhamento da imagem|#####################################################
 def mirroring(cam_frame):
     return cam_frame[:,::-1,:].copy()
 
-#######################################|Função para a conversão em escala de cinza|#################################################
+
 def gray_scale(cam_frame):
     if cam_frame.ndim <= 2:
         raise ValueError('O Frame deve ter canais de cores')
+
     return np.dot(cam_frame[:,:,:],[0.114, 0.587, 0.299]).astype(np.uint8)
  
-####################################################|Função Binarização|############################################################
+
 def binarization(cam_frame,limiar = 127):
     if cam_frame.ndim != 2:
         raise ValueError('O Frame deve ser bidimensional (grayscale).')
 
     cam_frame = cam_frame.copy()
+   
     return np.where(cam_frame < limiar, 0, 255).astype(np.uint8)
 
-##############################################|Função Background Subtraction|#######################################################
+
 def background_subtraction(cam_frame, start_time=3, limiar=15):
-    
     cam_frame = cam_frame.copy()
 
     if cam_frame.ndim != 2:
@@ -42,19 +42,17 @@ def background_subtraction(cam_frame, start_time=3, limiar=15):
 
     return cam_frame.astype(np.uint8)
 
-##################################################|Função de Down Sample|###########################################################
-def down_sampling(cam_frame,division= 16):
-    
+def down_sampling(cam_frame,division= 16):    
     visualizer = cam_frame.copy()
     
     if cam_frame.ndim == 3:
         down_sample = np.zeros(shape=(cam_frame.shape[0]//division,cam_frame.shape[1]//division,3),dtype=np.uint8)
+    
     elif cam_frame.ndim == 2:
         down_sample = np.zeros(shape=(cam_frame.shape[0]//division,cam_frame.shape[1]//division),dtype=np.uint8)
 
     for i in range(0, cam_frame.shape[0], division):
         for j in range(0, cam_frame.shape[1], division):
-
             block = visualizer[i:i+division, j:j+division]
 
             if cam_frame.ndim == 3:
@@ -63,7 +61,6 @@ def down_sampling(cam_frame,division= 16):
                 block_mean = int(block.mean())
 
             visualizer[i:i+division, j:j+division] = block_mean
-
             down_sample[i // division, j // division] = block_mean
     
     visualizer = visualizer.astype(np.uint8)
@@ -71,9 +68,10 @@ def down_sampling(cam_frame,division= 16):
 
     return (down_sample,visualizer)
 
-##################################################|Função Bounding Box|#############################################################
+
 def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     cam_frame = cam_frame.copy()
+
     if frame_vizualizer is None:
         frame_vizualizer = cam_frame.copy()
     else:
@@ -86,7 +84,9 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
         cam_frame = gray_scale(cam_frame).copy()
     
     y, x = np.where(cam_frame == 255)
+
     if len(x) == 0 or len(y) == 0:
+
         return (division, division, division, division),frame_vizualizer
 
     x_min, x_max = np.min(x), np.max(x)
@@ -96,98 +96,32 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     frame_vizualizer[y_min:y_max+1, x_max] = [255,0,150] #Direita 
     frame_vizualizer[y_min, x_min:x_max+1] = [255,0,150] #Cima
     frame_vizualizer[y_max, x_min:x_max+1] = [255,0,150] #Baixo
-#               CIMA               BAIXO                      
+                      
     return (y_min//division,(y_max-division+1)//division,x_min//division,(x_max-division +1)//division),frame_vizualizer
 
-###################################################|Função de Gradeamento|###########################################################
-def grid(cam_frame):
-    cam_frame = cam_frame.copy()
+def centralize(sample, bbox_points):
+    cut_image = sample[bbox_points[0]:bbox_points[1], bbox_points[2]:bbox_points[3]].copy()
+    total_height,total_width = sample.shape
+    ys, xs = np.nonzero(cut_image)
 
-    cam_frame[:,np.r_[160,480],:] = [255,255,255]
-    cam_frame[160,160:480,:] = [255,255,255]
-    cam_frame[240,np.r_[0:160,480:640],:] = [255,255,255]
+    if len(xs) == 0 and len(ys) == 0:
 
-    return cam_frame
+        return np.zeros((30, 40), dtype=np.uint8)
 
-##################################################|Função de Vetorização|###########################################################
-def vectorize(sample, bbox_points):
+    cm_x = int(np.round(np.mean(xs))) + bbox_points[2]
+    center_x_cut = cm_x - bbox_points[2]
 
-    cut_image = sample[bbox_points[0]:bbox_points[1], bbox_points[2]:bbox_points[3]]
-    somas = np.sum(cut_image, axis=0)
-    total_width_length = sample.shape[1]
-    total_height_length = sample.shape[0]
+    left_pad = max(total_width//2 - center_x_cut, 0)
+    right_pad = max(total_width - (cut_image.shape[1] + left_pad), 0)
+    pad_top = max(total_height - cut_image.shape[0], 0)
 
-    if np.any(somas > 0):
-        center_points = np.argmax(somas)
+    cut_image = np.pad(
+        cut_image,
+        ((pad_top, 0), (left_pad, right_pad)),
+        mode='constant',
+        constant_values=0
+    )
 
+    cut_image = cut_image[:total_height,:total_width]
 
-        target_center = total_width_length // 2
-
-        left_length = center_points
-        right_length = (cut_image.shape[1]) - center_points
-
-        pad_left = target_center - left_length
-        pad_right = total_width_length - target_center - right_length
-
-        vector = np.pad(
-            cut_image,
-            pad_width=(
-                (max(total_height_length - cut_image.shape[0],0), 0),
-                (max(pad_left,0), max(pad_right,0))
-            ),
-            mode='constant',
-            constant_values=0
-        )
-
-        vector = vector // 255
-
-
-
-        vector = vector.flatten()
-        
-    else:
-        vector = np.zeros((total_height_length,total_width_length), dtype=np.uint8).flatten()
-    return vector
-
-##################################################| D E S C O N T I N U A D A S |###################################################
-
-#Função Target(Descontinuada)
-def color_target(cam_frame,size = 10,height_width = (5,5),color = 'red'):
-    
-    height,width = height_width
-
-    cp =(cam_frame.shape[0]*height//10,cam_frame.shape[1]*width//10)
-
-    target_values = cam_frame[cp[0]-size+1:cp[0]+size-1,cp[1]-size+1:cp[1]+size-1]
-    cam_frame_target = cam_frame.copy()
-
-    if color == 'blue':
-        color = [255,0,0]
-    elif color == 'green':
-        color = [0,255,0]
-    else:
-        color = [0,0,255]
-
-    cam_frame_target[cp[0]-size:cp[0]+size,cp[1]-size:cp[1]+size] = color
-    cam_frame_target[cp[0]-size+1:cp[0]+size-1,cp[1]-size+1:cp[1]+size-1] = target_values
-
-    target_values = cam_frame[cp[0]-size+1:cp[0]+size-1,cp[1]-size+1:cp[1]+size-1]
-    
-    target_RGB_means = (np.mean(target_values[:,:,2]),np.mean(target_values[:,:,1]),np.mean(target_values[:,:,0]))
-    target_RGB_stds = (np.std(target_values[:,:,2]),np.std(target_values[:,:,1]),np.std(target_values[:,:,0]))
-
-    return (cam_frame_target,target_RGB_means,target_RGB_stds)
-
-#Função de Chroma Key (Descontinuada)
-def chroma_key(cam_frame,target_RGB_means=(125,125,125),target_RGB_stds =(25,25,25),limiar = 8):
-
-    condition = ( (target_RGB_means[0] - target_RGB_stds[0] * limiar < cam_frame[:, :, 2]) &
-                  (target_RGB_means[0] + target_RGB_stds[0] * limiar > cam_frame[: ,: ,2]) &
-                  (target_RGB_means[1] - target_RGB_stds[1] * limiar < cam_frame[:, :, 1]) &
-                  (target_RGB_means[1] + target_RGB_stds[1] * limiar > cam_frame[:, :, 1]) &
-                  (target_RGB_means[2] - target_RGB_stds[2] * limiar < cam_frame[:, :, 0]) &
-                  (target_RGB_means[2] + target_RGB_stds[2] * limiar > cam_frame[:, :, 0]) )
-
-    mask_cam = cam_frame.copy()
-    mask_cam[condition] = 0
-    return mask_cam
+    return cut_image.astype(np.uint8)
