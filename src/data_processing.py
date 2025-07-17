@@ -42,6 +42,7 @@ def background_subtraction(cam_frame, start_time=3, limiar=15):
 
     return cam_frame.astype(np.uint8)
 
+
 def down_sampling(cam_frame,division= 16):    
     visualizer = cam_frame.copy()
     
@@ -98,6 +99,7 @@ def bounding_box(cam_frame, frame_vizualizer=None,division = 16):
     frame_vizualizer[y_max, x_min:x_max+1] = [255,0,150] #Baixo
                       
     return (y_min//division,(y_max-division+1)//division,x_min//division,(x_max-division +1)//division),frame_vizualizer
+
 
 def centralize(sample, bbox_points):
     cut_image = sample[bbox_points[0]:bbox_points[1], bbox_points[2]:bbox_points[3]].copy()
