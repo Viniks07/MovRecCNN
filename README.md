@@ -43,5 +43,4 @@ A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar co
 
 Abaixo temos uma imagem mais explicita de como funcionam esses valores dentro de cada posição.
 
-![Matriz RGB](media/gray_matrix.png)
-asdad
+![Matriz RGB](media/gray_matrix.PNG)
