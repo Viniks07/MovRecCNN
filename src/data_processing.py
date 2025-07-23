@@ -127,3 +127,19 @@ def centralize(sample, bbox_points):
     cut_image = cut_image[:total_height,:total_width]
 
     return cut_image.astype(np.uint8)
+
+def dilate(frame, kernel, iterations=1):
+    frame = frame.copy()
+    for _ in range(iterations):
+        padded = np.pad(frame, 
+                        ((kernel.shape[0]//2, kernel.shape[0]//2),
+                         (kernel.shape[1]//2, kernel.shape[1]//2)),
+                        mode='constant', constant_values=0)
+        result = np.zeros_like(frame)
+        for i in range(frame.shape[0]):
+            for j in range(frame.shape[1]):
+                region = padded[i:i+kernel.shape[0], j:j+kernel.shape[1]]
+                if np.any(region[kernel ==1] == 255):
+                    result[i, j] = 255
+        frame = result
+    return frame
