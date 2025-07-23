@@ -1,5 +1,5 @@
 
-![wave](media/wave.gif)
+![wave](media/static/wave.gif)
 
 # **Apresentação**
 Olá! Meu nome é Vinícius Fonseca e sou estudante de graduação em **Matemática** na **UEL - Universidade Estadual de Londrina**.  
@@ -16,7 +16,8 @@ Naturalmente, a proximidade entre Matemática e Ciência de Dados me levou a apr
 
 As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso de LLMs para Detecção de Fake News no Brasil***, no qual utilizei LLMs para gerar embeddings com o Ollama e os classifiquei com um Random Forest Classifier do `scikit-learn`, alcançando métricas ***f1-macro*** entre ***88%*** (pior cenário) e ***99%*** (cenário ideal).
 
->Confira o projeto aqui → [LLM4FakeNews](https://github.com/Viniks07/LLM4FakeNews) 
+>Confira o projeto aqui **→** [LLM4FakeNews](https://github.com/Viniks07/LLM4FakeNews)   
+
   
 Embora esse projeto tenha trazido importantes aprendizados, minha principal área de interesse continua sendo a **Visão Computacional**.
 Ao experimentar diversos exemplos com `cv2` e `YOLO`, percebi que estava adquirindo familiaridade com as bibliotecas, mas sem uma compreensão profunda dos princípios que fundamentam seu funcionamento.
@@ -39,8 +40,8 @@ Uma das principais representações de imagens para o computador é a matriz ond
 
 A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar conceitualmente como funciona o posicionamento de cada pixel e os valores dentro deles.
 
-![Representação Matriz](media/matrix_representation.png)
+![Representação Matriz](media/static/matrix_representation.png)
 
 Abaixo temos uma imagem mais explicita de como funcionam esses valores dentro de cada posição.
 
-![Matriz RGB](media/gray_matrix.PNG)
+![Matriz RGB](media/static/gray_matrix.PNG)
