@@ -140,7 +140,7 @@
     <!-- Modal de entrada de número -->
     <div id="numberInputModal" class="modal-overlay">
         <div class="modal-content">
-            <h3>Digite um numero de 0 a 255 e pressione "ENTER"</h3>
+            <h3>Escolha um numero de 0 a 255</h3>
             <div id="errorMessage" class="error-message"></div> <!-- Div para mensagens de erro -->
             <input type="number" id="newNumberInput" placeholder="Número">
             <!-- O botão de confirmar foi removido, a confirmação agora é feita com a tecla Enter -->
@@ -379,7 +379,7 @@ for (let i = 1; i <=5; i++) {
 
         // --- Add Axes with Labels and Graduations ---
         // Keeping axis definition as per user's instruction "não altere os eixos (tamanhp nem posiçã)"
-        const AXIS_LENGTH = 4; // Length of the axes
+        const AXIS_LENGTH = 8; // Length of the axes
         const AXIS_START_X = -2;
         const AXIS_START_Y = 1;
         const AXIS_START_Z = -2;
@@ -390,7 +390,7 @@ for (let i = 1; i <=5; i++) {
         const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Black
         const zAxisPoints = [];
         zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z-0.5));
-        zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + AXIS_LENGTH));
+        zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + 4));
         const zAxisGeometry = new THREE.BufferGeometry().setFromPoints(zAxisPoints);
         const zAxis = new THREE.Line(zAxisGeometry, zAxisMaterial);
         scene.add(zAxis);

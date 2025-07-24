@@ -46,3 +46,4 @@ Abaixo temos uma imagem mais explicita de como funcionam esses valores dentro de
 
 ![Matriz RGB](media/static/gray_matrix.png)
 
+[**Veja como funciona aqui**](https://viniks07.github.io/MovRecMLP/media/interactive/simulador_de_pixel.html)
