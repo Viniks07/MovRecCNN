@@ -173,7 +173,7 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.screenSpacePanning = false;
-        const fixedCameraRadius = 6; // Raio fixo para a câmera
+        const fixedCameraRadius = 17.5; // Raio fixo para a câmera
         controls.minDistance = fixedCameraRadius; // Allow closer zoom
         controls.maxDistance = fixedCameraRadius; // Limit max zoom
         
@@ -387,57 +387,120 @@ for (let i = 1; i <=5; i++) {
         const GRAD_OFFSET = 0.2; // Offset for graduation numbers from axis
 
         // Z-axis (canal)
-        const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Black
-        const zAxisPoints = [];
-        zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z-0.5));
-        zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + 3.5));
-        const zAxisGeometry = new THREE.BufferGeometry().setFromPoints(zAxisPoints);
-        const zAxis = new THREE.Line(zAxisGeometry, zAxisMaterial);
-        scene.add(zAxis);
+        // --- Linha contínua (inicial)
+// --- Linha contínua (inicial)
+// --- Linha contínua (até z = 4)
+// --- Linha contínua do eixo Z até z = 4
+const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+const zAxisLinePoints = [];
+const zEnd = 4;
 
-        const canalLabel = createTextSprite('CANAL', 'black', 24);
-        canalLabel.position.set(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + AXIS_LENGTH + LABEL_OFFSET-2.5);
-        scene.add(canalLabel);
+zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z - 0.5));
+zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, zEnd-2.5));
 
-        // Z-axis graduations (1, 2, 3)
-        for (let i = 0; i <= 2; i++) {
-            const gradLabel = createTextSprite(i.toString(), 'black', 36);
-            gradLabel.position.set(AXIS_START_X - GRAD_OFFSET, AXIS_START_Y, AXIS_START_Z + i*1.5+0.5); // Position at absolute 1,2,3
-            scene.add(gradLabel);
-        }
+const zAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(zAxisLinePoints);
+const zAxisLine = new THREE.Line(zAxisLineGeometry, zAxisMaterial);
+scene.add(zAxisLine);
 
-        // X-axis (coluna)
-        const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Black
-        const xAxisPoints = [];
-        xAxisPoints.push(new THREE.Vector3(AXIS_START_X-0.5, AXIS_START_Y, AXIS_START_Z));
-        xAxisPoints.push(new THREE.Vector3(AXIS_START_X + AXIS_LENGTH+1, AXIS_START_Y, AXIS_START_Z));
-        const xAxisGeometry = new THREE.BufferGeometry().setFromPoints(xAxisPoints);
-        const xAxis = new THREE.Line(xAxisGeometry, xAxisMaterial);
-        scene.add(xAxis);
+// --- Esfera preta no final do eixo Z (no ponto zEnd)
+const sphereGeometry = new THREE.SphereGeometry(0.07,16, 16); // raio pequeno
+const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Preto
+const canalPoint = new THREE.Mesh(sphereGeometry, sphereMaterial);
+canalPoint.position.set(AXIS_START_X, AXIS_START_Y, zEnd-2.5);
+scene.add(canalPoint);
 
-        const colunaLabel = createTextSprite('COLUNA', 'black', 24);
-        colunaLabel.position.set(AXIS_START_X + AXIS_LENGTH + LABEL_OFFSET+1, AXIS_START_Y, AXIS_START_Z);
-        scene.add(colunaLabel);
+// --- Label "CANAL"
+const canalLabel = createTextSprite('CANAL', 'black', 48);
+canalLabel.position.set(AXIS_START_X, AXIS_START_Y, zEnd + LABEL_OFFSET- 2);
+scene.add(canalLabel);
 
-        // X-axis graduations (1, 2, 3)
-        for (let i = 0; i <= 2; i++) {
-            const gradLabel = createTextSprite(i.toString(), 'black', 36);
-            gradLabel.position.set(AXIS_START_X + 2*i+3, AXIS_START_Y - GRAD_OFFSET, AXIS_START_Z); // Position at absolute 1,2,3
-            scene.add(gradLabel);
-        }
+// --- Z-axis graduations (1, 2, 3)
+for (let i = 0; i <= 2; i++) {
+    const gradLabel = createTextSprite(i.toString(), 'black', 36);
+    gradLabel.position.set(AXIS_START_X - GRAD_OFFSET, AXIS_START_Y, AXIS_START_Z + i * 1.5 + 0.5);
+    scene.add(gradLabel);
+}
 
-        // Y-axis (linhas)
-        const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Black
-        const yAxisPoints = [];
-        yAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y+0.5, AXIS_START_Z));
-        yAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y - AXIS_LENGTH, AXIS_START_Z));
-        const yAxisGeometry = new THREE.BufferGeometry().setFromPoints(yAxisPoints);
-        const yAxis = new THREE.Line(yAxisGeometry, yAxisMaterial);
-        scene.add(yAxis);
 
-        const linhasLabel = createTextSprite('LINHA', 'black', 24);
-        linhasLabel.position.set(AXIS_START_X,2 -AXIS_START_Y - AXIS_LENGTH - LABEL_OFFSET, AXIS_START_Z);
-        scene.add(linhasLabel);
+// --- Linha contínua do eixo X até x = 4
+const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+const xAxisLinePoints = [];
+const X_CONTINUO_FINAL = 5;
+
+xAxisLinePoints.push(new THREE.Vector3(AXIS_START_X - 0.5, AXIS_START_Y, AXIS_START_Z));
+xAxisLinePoints.push(new THREE.Vector3(X_CONTINUO_FINAL, AXIS_START_Y, AXIS_START_Z));
+
+const xAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(xAxisLinePoints);
+const xAxisLine = new THREE.Line(xAxisLineGeometry, xAxisMaterial);
+scene.add(xAxisLine);
+
+// --- Linha tracejada do eixo X de x = 4.2 até x = 6
+const xAxisDashedPoints = [];
+const xSegmentLength = 0.1;
+const xGap = 0.2;
+let currentX = 4.2;
+const xEnd = 8.2;
+
+while (currentX + xSegmentLength <= xEnd) {
+    const start = new THREE.Vector3(currentX, AXIS_START_Y, AXIS_START_Z);
+    const end = new THREE.Vector3(currentX + xSegmentLength, AXIS_START_Y, AXIS_START_Z);
+    xAxisDashedPoints.push(start, end);
+    currentX += xSegmentLength + xGap;
+}
+
+const xAxisDashedGeometry = new THREE.BufferGeometry().setFromPoints(xAxisDashedPoints);
+const xAxisDashed = new THREE.LineSegments(xAxisDashedGeometry, xAxisMaterial);
+scene.add(xAxisDashed);
+
+// --- Label "COLUNA"
+const colunaLabel = createTextSprite('COLUNA', 'black', 48);
+colunaLabel.position.set(xEnd + LABEL_OFFSET, AXIS_START_Y, AXIS_START_Z);
+scene.add(colunaLabel);
+
+// --- Graduações (1, 2, 3)
+for (let i = 0; i <= 2; i++) {
+    const gradLabel = createTextSprite(i.toString(), 'black', 36);
+    gradLabel.position.set(AXIS_START_X + 2 * i + 3, AXIS_START_Y - GRAD_OFFSET, AXIS_START_Z);
+    scene.add(gradLabel);
+}
+
+
+       // --- Linha contínua do eixo Y até y = -4
+const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+const yAxisLinePoints = [];
+const Y_CONTINUO_FINAL = -5;
+
+yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y + 0.5, AXIS_START_Z));
+yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, Y_CONTINUO_FINAL, AXIS_START_Z));
+
+const yAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(yAxisLinePoints);
+const yAxisLine = new THREE.Line(yAxisLineGeometry, yAxisMaterial);
+scene.add(yAxisLine);
+
+// --- Linha tracejada do eixo Y de y = -4.2 até y = -6
+const yAxisDashedPoints = [];
+const ySegmentLength = 0.1;
+const yGap = 0.2;
+let currentY = -4.2;
+const yEnd = -8.2;
+
+while (currentY - ySegmentLength >= yEnd) {
+    const start = new THREE.Vector3(AXIS_START_X, currentY, AXIS_START_Z);
+    const end = new THREE.Vector3(AXIS_START_X, currentY - ySegmentLength, AXIS_START_Z);
+    yAxisDashedPoints.push(start, end);
+    currentY -= ySegmentLength + yGap;
+}
+
+const yAxisDashedGeometry = new THREE.BufferGeometry().setFromPoints(yAxisDashedPoints);
+const yAxisDashed = new THREE.LineSegments(yAxisDashedGeometry, yAxisMaterial);
+scene.add(yAxisDashed);
+
+// --- Label "LINHA"
+const linhasLabel = createTextSprite('LINHA', 'black', 48);
+linhasLabel.position.set(AXIS_START_X, yEnd - LABEL_OFFSET+0.5, AXIS_START_Z);
+scene.add(linhasLabel);
+
+        
 
         // Y-axis graduations (1, 2, 3)
         for (let i = 0; i <= 2; i++) {
