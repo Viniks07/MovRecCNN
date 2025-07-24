@@ -80,7 +80,17 @@
         .modal-content button:hover {
             background-color: #0056b3;
         }
+        /* Remove as setas do campo de número para navegadores WebKit (Chrome, Safari, Edge) */
+        .modal-content input[type="number"]::-webkit-outer-spin-button,
+        .modal-content input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none; /* Remove a aparência padrão do botão */
+            margin: 0; /* Garante que nenhum espaço extra seja deixado */
+        }
 
+        /* Remove as setas do campo de número para Firefox */
+        .modal-content input[type="number"] {
+            -moz-appearance: textfield; /* Instrui o Firefox a tratar o campo como um campo de texto normal */
+        }
         .error-message {
             color: #ff4d4d; /* Cor vermelha para mensagens de erro */
             margin-bottom: 15px;
@@ -508,7 +518,7 @@
 
                 // Validar o número de entrada
                 if (isNaN(newValue) || newValue < 0 || newValue > 255) {
-                    errorMessageDiv.textContent = 'Por favor, insira um número entre 0 e 255.';
+                    errorMessageDiv.textContent = 'Insira um número entre 0 e 255.';
                     return; // Não faz nada se a validação falhar
                 }
 
