@@ -20,7 +20,7 @@ As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso d
 
   
 Embora esse projeto tenha trazido importantes aprendizados, minha principal área de interesse continua sendo a **Visão Computacional**.
-Ao experimentar diversos exemplos com `OpenCV` e `YOLO`, percebi que estava adquirindo familiaridade com as bibliotecas, mas sem uma compreensão profunda dos princípios que fundamentam seu funcionamento.
+Ao experimentar diversos exemplos com `OpenCV` e `YOLO`, percebi que estava adquirindo familiaridade com as bibliotecas, mas sentia falta de uma compreensão mais aprofundada dos princípios que fundamentam seu funcionamento.
 
 Com esse pensamento, decidi iniciar este novo projeto chamado [MovRecCNN](https://github.com/Viniks07/MovRecCNN):
   
