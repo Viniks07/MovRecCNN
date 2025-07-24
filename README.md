@@ -8,10 +8,10 @@ Desde o meu primeiro "Hello World!" me apaixonei por programação — e desde e
 
 Naturalmente, a proximidade entre Matemática e Ciência de Dados me levou a aprender ``Python`` e, com ele, as principais bibliotecas da área:
 
-  - `numpy`
-  - `pandas`
+  - `NumPy`
+  - `Pandas`
   - `matplotlib`
-  - `cv2`
+  - `OpenCV`
   - `YOLO`
 
 As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso de LLMs para Detecção de Fake News no Brasil***, no qual utilizei LLMs para gerar embeddings com o Ollama e os classifiquei com um Random Forest Classifier do `scikit-learn`, alcançando métricas ***f1-macro*** entre ***88%*** (pior cenário) e ***99%*** (cenário ideal).
@@ -20,7 +20,7 @@ As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso d
 
   
 Embora esse projeto tenha trazido importantes aprendizados, minha principal área de interesse continua sendo a **Visão Computacional**.
-Ao experimentar diversos exemplos com `cv2` e `YOLO`, percebi que estava adquirindo familiaridade com as bibliotecas, mas sem uma compreensão profunda dos princípios que fundamentam seu funcionamento.
+Ao experimentar diversos exemplos com `OpenCV` e `YOLO`, percebi que estava adquirindo familiaridade com as bibliotecas, mas sem uma compreensão profunda dos princípios que fundamentam seu funcionamento.
 
 Com esse pensamento, decidi iniciar este novo projeto chamado [MovRecCNN](https://github.com/Viniks07/MovRecCNN):
   
@@ -30,7 +30,7 @@ Com esse pensamento, decidi iniciar este novo projeto chamado [MovRecCNN](https:
 
 - ``numpy`` para manipulação de matrizes
 
-- ``cv2`` ***será utilizado exclusivamente para leitura e escrita de vídeos e imagens***
+- ``OpenCV`` ***será utilizado exclusivamente para leitura e escrita de vídeos e imagens***
 
 E por falar em matrizes, está na hora de abordarmos o elemento central de todo este projeto.
 
