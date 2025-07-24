@@ -1,5 +1,5 @@
 
-![wave](docs/static/wave.gif)
+![wave](media/static/wave.gif)
 
 # **Apresentação**
 Olá! Meu nome é Vinícius Fonseca e sou estudante de graduação em **Matemática** na **UEL - Universidade Estadual de Londrina**.  
@@ -40,8 +40,9 @@ Uma das principais representações de imagens para o computador é a matriz ond
 
 A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar conceitualmente como funciona o posicionamento de cada pixel e os valores dentro deles.
 
-![Representação Matriz](docs/static/matrix_representation.png)
+![Representação Matriz](media/static/matrix_representation.png)
 
 Abaixo temos uma imagem mais explicita de como funcionam esses valores dentro de cada posição.
 
-![Matriz RGB](docs/static/gray_matrix.png)
+![Matriz RGB](media/static/gray_matrix.png)
+
