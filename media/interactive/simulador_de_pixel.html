@@ -91,8 +91,8 @@
         /* Estilos para o display RGB */
         #rgbDisplay {
             position: absolute;
-            top: 60px; /* Movido para baixo */
-            right: 45px; /* Movido para a esquerda */
+            top: 650px; /* Movido para baixo */
+            right: 30px; /* Movido para a esquerda */
             font-size: 24px;
             font-family: Arial, sans-serif;
             padding: 10px;
@@ -102,22 +102,25 @@
             z-index: 100;
         }
         .rgb-bracket, .rgb-comma {
-            color: lightgray;
+            color: black;
         }
         .rgb-red {
             color: red;
+            cursor: pointer; /* Adicionado para indicar que é clicável */
         }
         .rgb-green {
             color: green;
+            cursor: pointer; /* Adicionado para indicar que é clicável */
         }
         .rgb-blue {
             color: blue;
+            cursor: pointer; /* Adicionado para indicar que é clicável */
         }
     </style>
 </head>
 <body>
 <div id="info">
-    Altere os valores das células para modificar a cor de fundo
+    Altere o valor das células ou da lista para modificar a cor de fundo
 </div>
 
 <style>
@@ -135,24 +138,16 @@
     }
 </style>
 
-    <!-- O canvas será inserido aqui pelo script -->
-
-    <!-- Modal de entrada de número -->
     <div id="numberInputModal" class="modal-overlay">
         <div class="modal-content">
             <h3>Escolha um numero de 0 a 255</h3>
-            <div id="errorMessage" class="error-message"></div> <!-- Div para mensagens de erro -->
-            <input type="number" id="newNumberInput" placeholder="Número">
-            <!-- O botão de confirmar foi removido, a confirmação agora é feita com a tecla Enter -->
-        </div>
+            <div id="errorMessage" class="error-message"></div> <input type="number" id="newNumberInput" placeholder="Número">
+            </div>
     </div>
 
-    <!-- Display RGB no canto superior direito -->
     <div id="rgbDisplay"></div>
 
-    <!-- Importa a biblioteca three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Importa os controles de órbita para interatividade da câmera -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
@@ -173,7 +168,7 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.screenSpacePanning = false;
-        const fixedCameraRadius = 17.5; // Raio fixo para a câmera
+        const fixedCameraRadius = 20; // Raio fixo para a câmera
         controls.minDistance = fixedCameraRadius; // Allow closer zoom
         controls.maxDistance = fixedCameraRadius; // Limit max zoom
         
@@ -355,27 +350,27 @@
         const bluePlane = createInteractiveSquare('blue', 255, 0, 0, spacingZ, 0x0000ff);
 
         // --- Add dots to each main square ---
- for (let i = 1; i <= 5; i++) {
-    const offsetX = dotOffset + i * 0.3;
-    const offsetY = -dotOffset - i * 0.3;
-    createColoredDot(0xff0000, offsetX+i, 0, -spacingZ);        // lado
-    createColoredDot(0xff0000, 0, offsetY-i, -spacingZ);        // embaixo
-    createColoredDot(0xff0000, offsetX+i/2, offsetY-i/2, -spacingZ);  // diagonal
-}
-for (let i = 1; i <= 5; i++) {
-    const offsetX = dotOffset + i * 0.3;
-    const offsetY = -dotOffset - i * 0.3;
-    createColoredDot(0x00ff00, offsetX+i, 0, 0);
-    createColoredDot(0x00ff00, 0, offsetY-i, 0);
-    createColoredDot(0x00ff00, offsetX+i/2, offsetY-i/2, 0);
-}
-for (let i = 1; i <=5; i++) {
-    const offsetX = dotOffset + i * 0.3;
-    const offsetY = -dotOffset - i * 0.3;
-    createColoredDot(0x0000ff, offsetX+i, 0, spacingZ);
-    createColoredDot(0x0000ff, 0, offsetY-i, spacingZ);
-    createColoredDot(0x0000ff, offsetX+i/2, offsetY-i/2, spacingZ);
-}
+        for (let i = 1; i <= 5; i++) {
+            const offsetX = dotOffset + i * 0.3;
+            const offsetY = -dotOffset - i * 0.3;
+            createColoredDot(0xff0000, offsetX+i, 0, -spacingZ);       // lado
+            createColoredDot(0xff0000, 0, offsetY-i, -spacingZ);       // embaixo
+            createColoredDot(0xff0000, offsetX+i/2, offsetY-i/2, -spacingZ);  // diagonal
+        }
+        for (let i = 1; i <= 5; i++) {
+            const offsetX = dotOffset + i * 0.3;
+            const offsetY = -dotOffset - i * 0.3;
+            createColoredDot(0x00ff00, offsetX+i, 0, 0);
+            createColoredDot(0x00ff00, 0, offsetY-i, 0);
+            createColoredDot(0x00ff00, offsetX+i/2, offsetY-i/2, 0);
+        }
+        for (let i = 1; i <=5; i++) {
+            const offsetX = dotOffset + i * 0.3;
+            const offsetY = -dotOffset - i * 0.3;
+            createColoredDot(0x0000ff, offsetX+i, 0, spacingZ);
+            createColoredDot(0x0000ff, 0, offsetY-i, spacingZ);
+            createColoredDot(0x0000ff, offsetX+i/2, offsetY-i/2, spacingZ);
+        }
 
         // --- Add Axes with Labels and Graduations ---
         // Keeping axis definition as per user's instruction "não altere os eixos (tamanhp nem posiçã)"
@@ -387,122 +382,86 @@ for (let i = 1; i <=5; i++) {
         const GRAD_OFFSET = 0.2; // Offset for graduation numbers from axis
 
         // Z-axis (canal)
-        // --- Linha contínua (inicial)
-// --- Linha contínua (inicial)
-// --- Linha contínua (até z = 4)
-// --- Linha contínua do eixo Z até z = 4
-const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
-const zAxisLinePoints = [];
-const zEnd = 4;
+        const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+        const zAxisLinePoints = [];
+        const zEnd = 4;
+        zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z - 0.5));
+        zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, zEnd-2.5));
+        const zAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(zAxisLinePoints);
+        const zAxisLine = new THREE.Line(zAxisLineGeometry, zAxisMaterial);
+        scene.add(zAxisLine);
+        const sphereGeometry = new THREE.SphereGeometry(0.07,16, 16); // raio pequeno
+        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Preto
+        const canalPoint = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        canalPoint.position.set(AXIS_START_X, AXIS_START_Y, zEnd-2.5);
+        scene.add(canalPoint);
+        const canalLabel = createTextSprite('CANAL', 'black', 48);
+        canalLabel.position.set(AXIS_START_X, AXIS_START_Y, zEnd + LABEL_OFFSET- 2);
+        scene.add(canalLabel);
+        for (let i = 0; i <= 2; i++) {
+            const gradLabel = createTextSprite(i.toString(), 'black', 36);
+            gradLabel.position.set(AXIS_START_X - GRAD_OFFSET, AXIS_START_Y, AXIS_START_Z + i * 1.5 + 0.5);
+            scene.add(gradLabel);
+        }
 
-zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z - 0.5));
-zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, zEnd-2.5));
+        // X-axis (coluna)
+        const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+        const xAxisLinePoints = [];
+        const X_CONTINUO_FINAL = 5;
+        xAxisLinePoints.push(new THREE.Vector3(AXIS_START_X - 0.5, AXIS_START_Y, AXIS_START_Z));
+        xAxisLinePoints.push(new THREE.Vector3(X_CONTINUO_FINAL, AXIS_START_Y, AXIS_START_Z));
+        const xAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(xAxisLinePoints);
+        const xAxisLine = new THREE.Line(xAxisLineGeometry, xAxisMaterial);
+        scene.add(xAxisLine);
+        const xAxisDashedPoints = [];
+        const xSegmentLength = 0.1;
+        const xGap = 0.2;
+        let currentX = 4.2;
+        const xEnd = 8.2;
+        while (currentX + xSegmentLength <= xEnd) {
+            const start = new THREE.Vector3(currentX, AXIS_START_Y, AXIS_START_Z);
+            const end = new THREE.Vector3(currentX + xSegmentLength, AXIS_START_Y, AXIS_START_Z);
+            xAxisDashedPoints.push(start, end);
+            currentX += xSegmentLength + xGap;
+        }
+        const xAxisDashedGeometry = new THREE.BufferGeometry().setFromPoints(xAxisDashedPoints);
+        const xAxisDashed = new THREE.LineSegments(xAxisDashedGeometry, xAxisMaterial);
+        scene.add(xAxisDashed);
+        const colunaLabel = createTextSprite('COLUNA', 'black', 48);
+        colunaLabel.position.set(xEnd + LABEL_OFFSET, AXIS_START_Y, AXIS_START_Z);
+        scene.add(colunaLabel);
+        for (let i = 0; i <= 2; i++) {
+            const gradLabel = createTextSprite(i.toString(), 'black', 36);
+            gradLabel.position.set(AXIS_START_X + 2 * i + 3, AXIS_START_Y - GRAD_OFFSET, AXIS_START_Z);
+            scene.add(gradLabel);
+        }
 
-const zAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(zAxisLinePoints);
-const zAxisLine = new THREE.Line(zAxisLineGeometry, zAxisMaterial);
-scene.add(zAxisLine);
-
-// --- Esfera preta no final do eixo Z (no ponto zEnd)
-const sphereGeometry = new THREE.SphereGeometry(0.07,16, 16); // raio pequeno
-const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Preto
-const canalPoint = new THREE.Mesh(sphereGeometry, sphereMaterial);
-canalPoint.position.set(AXIS_START_X, AXIS_START_Y, zEnd-2.5);
-scene.add(canalPoint);
-
-// --- Label "CANAL"
-const canalLabel = createTextSprite('CANAL', 'black', 48);
-canalLabel.position.set(AXIS_START_X, AXIS_START_Y, zEnd + LABEL_OFFSET- 2);
-scene.add(canalLabel);
-
-// --- Z-axis graduations (1, 2, 3)
-for (let i = 0; i <= 2; i++) {
-    const gradLabel = createTextSprite(i.toString(), 'black', 36);
-    gradLabel.position.set(AXIS_START_X - GRAD_OFFSET, AXIS_START_Y, AXIS_START_Z + i * 1.5 + 0.5);
-    scene.add(gradLabel);
-}
-
-
-// --- Linha contínua do eixo X até x = 4
-const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
-const xAxisLinePoints = [];
-const X_CONTINUO_FINAL = 5;
-
-xAxisLinePoints.push(new THREE.Vector3(AXIS_START_X - 0.5, AXIS_START_Y, AXIS_START_Z));
-xAxisLinePoints.push(new THREE.Vector3(X_CONTINUO_FINAL, AXIS_START_Y, AXIS_START_Z));
-
-const xAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(xAxisLinePoints);
-const xAxisLine = new THREE.Line(xAxisLineGeometry, xAxisMaterial);
-scene.add(xAxisLine);
-
-// --- Linha tracejada do eixo X de x = 4.2 até x = 6
-const xAxisDashedPoints = [];
-const xSegmentLength = 0.1;
-const xGap = 0.2;
-let currentX = 4.2;
-const xEnd = 8.2;
-
-while (currentX + xSegmentLength <= xEnd) {
-    const start = new THREE.Vector3(currentX, AXIS_START_Y, AXIS_START_Z);
-    const end = new THREE.Vector3(currentX + xSegmentLength, AXIS_START_Y, AXIS_START_Z);
-    xAxisDashedPoints.push(start, end);
-    currentX += xSegmentLength + xGap;
-}
-
-const xAxisDashedGeometry = new THREE.BufferGeometry().setFromPoints(xAxisDashedPoints);
-const xAxisDashed = new THREE.LineSegments(xAxisDashedGeometry, xAxisMaterial);
-scene.add(xAxisDashed);
-
-// --- Label "COLUNA"
-const colunaLabel = createTextSprite('COLUNA', 'black', 48);
-colunaLabel.position.set(xEnd + LABEL_OFFSET, AXIS_START_Y, AXIS_START_Z);
-scene.add(colunaLabel);
-
-// --- Graduações (1, 2, 3)
-for (let i = 0; i <= 2; i++) {
-    const gradLabel = createTextSprite(i.toString(), 'black', 36);
-    gradLabel.position.set(AXIS_START_X + 2 * i + 3, AXIS_START_Y - GRAD_OFFSET, AXIS_START_Z);
-    scene.add(gradLabel);
-}
-
-
-       // --- Linha contínua do eixo Y até y = -4
-const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
-const yAxisLinePoints = [];
-const Y_CONTINUO_FINAL = -5;
-
-yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y + 0.5, AXIS_START_Z));
-yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, Y_CONTINUO_FINAL, AXIS_START_Z));
-
-const yAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(yAxisLinePoints);
-const yAxisLine = new THREE.Line(yAxisLineGeometry, yAxisMaterial);
-scene.add(yAxisLine);
-
-// --- Linha tracejada do eixo Y de y = -4.2 até y = -6
-const yAxisDashedPoints = [];
-const ySegmentLength = 0.1;
-const yGap = 0.2;
-let currentY = -4.2;
-const yEnd = -8.2;
-
-while (currentY - ySegmentLength >= yEnd) {
-    const start = new THREE.Vector3(AXIS_START_X, currentY, AXIS_START_Z);
-    const end = new THREE.Vector3(AXIS_START_X, currentY - ySegmentLength, AXIS_START_Z);
-    yAxisDashedPoints.push(start, end);
-    currentY -= ySegmentLength + yGap;
-}
-
-const yAxisDashedGeometry = new THREE.BufferGeometry().setFromPoints(yAxisDashedPoints);
-const yAxisDashed = new THREE.LineSegments(yAxisDashedGeometry, yAxisMaterial);
-scene.add(yAxisDashed);
-
-// --- Label "LINHA"
-const linhasLabel = createTextSprite('LINHA', 'black', 48);
-linhasLabel.position.set(AXIS_START_X, yEnd - LABEL_OFFSET+0.5, AXIS_START_Z);
-scene.add(linhasLabel);
-
-        
-
-        // Y-axis graduations (1, 2, 3)
+        // Y-axis (linha)
+        const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+        const yAxisLinePoints = [];
+        const Y_CONTINUO_FINAL = -5;
+        yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y + 0.5, AXIS_START_Z));
+        yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, Y_CONTINUO_FINAL, AXIS_START_Z));
+        const yAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(yAxisLinePoints);
+        const yAxisLine = new THREE.Line(yAxisLineGeometry, yAxisMaterial);
+        scene.add(yAxisLine);
+        const yAxisDashedPoints = [];
+        const ySegmentLength = 0.1;
+        const yGap = 0.2;
+        let currentY = -4.2;
+        const yEnd = -8.2;
+        while (currentY - ySegmentLength >= yEnd) {
+            const start = new THREE.Vector3(AXIS_START_X, currentY, AXIS_START_Z);
+            const end = new THREE.Vector3(AXIS_START_X, currentY - ySegmentLength, AXIS_START_Z);
+            yAxisDashedPoints.push(start, end);
+            currentY -= ySegmentLength + yGap;
+        }
+        const yAxisDashedGeometry = new THREE.BufferGeometry().setFromPoints(yAxisDashedPoints);
+        const yAxisDashed = new THREE.LineSegments(yAxisDashedGeometry, yAxisMaterial);
+        scene.add(yAxisDashed);
+        const linhasLabel = createTextSprite('LINHA', 'black', 48);
+        linhasLabel.position.set(AXIS_START_X, yEnd - LABEL_OFFSET+0.5, AXIS_START_Z);
+        scene.add(linhasLabel);
         for (let i = 0; i <= 2; i++) {
             const gradLabel = createTextSprite(i.toString(), 'black', 36);
             gradLabel.position.set(AXIS_START_X, AXIS_START_Y -2*i-2, AXIS_START_Z - GRAD_OFFSET); // Position at absolute 1,2,3
@@ -606,6 +565,52 @@ scene.add(linhasLabel);
         }
         window.addEventListener('mousemove', onMouseMove, false);
 
+        // --- START: NEW CODE FOR RGB DISPLAY INTERACTIVITY ---
+
+        // Create the static structure for the RGB display
+        rgbDisplayDiv.innerHTML = `
+            <span class="rgb-bracket">[</span><span id="rgb-red-val" class="rgb-red" title="Alterar valor de Vermelho"></span><span class="rgb-comma">,</span><span id="rgb-green-val" class="rgb-green" title="Alterar valor de Verde"></span><span class="rgb-comma">,</span><span id="rgb-blue-val" class="rgb-blue" title="Alterar valor de Azul"></span><span class="rgb-bracket">]</span>`;
+
+        // Get the value spans
+        const redValSpan = document.getElementById('rgb-red-val');
+        const greenValSpan = document.getElementById('rgb-green-val');
+        const blueValSpan = document.getElementById('rgb-blue-val');
+
+        // Function to handle clicks on the RGB values
+        function openModalForRgb(event) {
+            const targetId = event.target.id;
+            let colorKey = null;
+            
+            // Determine which color was clicked and set the corresponding plane as 'clickedPlane'
+            if (targetId === 'rgb-red-val') {
+                colorKey = 'red';
+                clickedPlane = redPlane; // Set context for the modal
+            } else if (targetId === 'rgb-green-val') {
+                colorKey = 'green';
+                clickedPlane = greenPlane; // Set context for the modal
+            } else if (targetId === 'rgb-blue-val') {
+                colorKey = 'blue';
+                clickedPlane = bluePlane; // Set context for the modal
+            }
+            
+            if (colorKey) {
+                activeColorKey = colorKey; // Set the active color key for the update logic
+                
+                // Show the modal and pre-fill the input
+                numberInputModal.classList.add('visible');
+                newNumberInput.value = currentNumbers[activeColorKey];
+                newNumberInput.focus();
+                errorMessageDiv.textContent = ''; // Clear any previous error messages
+            }
+        }
+
+        // Add event listeners to each color value span
+        redValSpan.addEventListener('click', openModalForRgb);
+        greenValSpan.addEventListener('click', openModalForRgb);
+        blueValSpan.addEventListener('click', openModalForRgb);
+
+        // --- END: NEW CODE ---
+
 
         // --- Animation Loop ---
         function animate() {
@@ -633,9 +638,10 @@ scene.add(linhasLabel);
                 infoDiv.style.textShadow = '1px 1px 2px rgba(0,0,0,0.5)'; // Sombra escura para texto claro
             }
 
-            // Atualiza o display RGB com cores específicas
-            rgbDisplayDiv.innerHTML = `<span class="rgb-bracket">[</span><span class="rgb-red">${currentNumbers.red}</span><span class="rgb-comma">,</span><span class="rgb-green">${currentNumbers.green}</span><span class="rgb-comma">,</span><span class="rgb-blue">${currentNumbers.blue}</span><span class="rgb-bracket">]</span>`;
-
+            // --- MODIFIED: Update the RGB display text content (instead of innerHTML) ---
+            redValSpan.textContent = currentNumbers.red;
+            greenValSpan.textContent = currentNumbers.green;
+            blueValSpan.textContent = currentNumbers.blue;
 
             renderer.render(scene, camera);
         }
