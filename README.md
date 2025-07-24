@@ -2,7 +2,7 @@
 ![wave](media/image/wave.gif)
 
 # **Apresentação**
-Olá! Meu nome é Vinícius Fonseca e sou estudante de graduação em **Matemática** na **UEL - Universidade Estadual de Londrina**.  
+Olá! Meu nome é **[Vinícius Fonseca](https://www.linkedin.com/in/vinicius-silva-fonseca/)** e sou estudante de graduação em **Matemática** na **[UEL - Universidade Estadual de Londrina](https://portal.uel.br/conheca-a-uel/)**.  
 
 Desde o meu primeiro "Hello World!" me apaixonei por programação — e desde então, não parei mais.  
 
