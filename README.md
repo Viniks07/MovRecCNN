@@ -22,7 +22,7 @@ As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso d
 Embora esse projeto tenha trazido importantes aprendizados, minha principal área de interesse continua sendo a **Visão Computacional**.
 Ao experimentar diversos exemplos com `cv2` e `YOLO`, percebi que estava adquirindo familiaridade com as bibliotecas, mas sem uma compreensão profunda dos princípios que fundamentam seu funcionamento.
 
-Com esse pensamento, decidi iniciar este novo projeto [MovRecCNN](https://github.com/Viniks07/MovRecCNN):
+Com esse pensamento, decidi iniciar este novo projeto chamado [MovRecCNN](https://github.com/Viniks07/MovRecCNN):
   
  **Desenvolver um pipeline de detecção e reconhecimento de movimentos sem uso de bibliotecas externas, utilizando apenas:**
 
