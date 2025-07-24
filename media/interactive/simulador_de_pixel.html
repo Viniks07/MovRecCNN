@@ -379,7 +379,7 @@ for (let i = 1; i <=5; i++) {
 
         // --- Add Axes with Labels and Graduations ---
         // Keeping axis definition as per user's instruction "não altere os eixos (tamanhp nem posiçã)"
-        const AXIS_LENGTH = 8; // Length of the axes
+        const AXIS_LENGTH = 6; // Length of the axes
         const AXIS_START_X = -2;
         const AXIS_START_Y = 1;
         const AXIS_START_Z = -2;
@@ -390,19 +390,19 @@ for (let i = 1; i <=5; i++) {
         const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Black
         const zAxisPoints = [];
         zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z-0.5));
-        zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + 4));
+        zAxisPoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + 3.5));
         const zAxisGeometry = new THREE.BufferGeometry().setFromPoints(zAxisPoints);
         const zAxis = new THREE.Line(zAxisGeometry, zAxisMaterial);
         scene.add(zAxis);
 
-        const canalLabel = createTextSprite('CANAL', 'black', 15);
-        canalLabel.position.set(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + AXIS_LENGTH + LABEL_OFFSET);
+        const canalLabel = createTextSprite('CANAL', 'black', 24);
+        canalLabel.position.set(AXIS_START_X, AXIS_START_Y, AXIS_START_Z + AXIS_LENGTH + LABEL_OFFSET-2.5);
         scene.add(canalLabel);
 
         // Z-axis graduations (1, 2, 3)
-        for (let i = 0; i <= 3; i++) {
-            const gradLabel = createTextSprite(i.toString(), 'black', 12);
-            gradLabel.position.set(AXIS_START_X - GRAD_OFFSET, AXIS_START_Y, AXIS_START_Z + i+1); // Position at absolute 1,2,3
+        for (let i = 0; i <= 2; i++) {
+            const gradLabel = createTextSprite(i.toString(), 'black', 36);
+            gradLabel.position.set(AXIS_START_X - GRAD_OFFSET, AXIS_START_Y, AXIS_START_Z + i*1.5+0.5); // Position at absolute 1,2,3
             scene.add(gradLabel);
         }
 
@@ -415,13 +415,13 @@ for (let i = 1; i <=5; i++) {
         const xAxis = new THREE.Line(xAxisGeometry, xAxisMaterial);
         scene.add(xAxis);
 
-        const colunaLabel = createTextSprite('COLUNA', 'black', 15);
+        const colunaLabel = createTextSprite('COLUNA', 'black', 24);
         colunaLabel.position.set(AXIS_START_X + AXIS_LENGTH + LABEL_OFFSET+1, AXIS_START_Y, AXIS_START_Z);
         scene.add(colunaLabel);
 
         // X-axis graduations (1, 2, 3)
-        for (let i = 0; i <= 1; i++) {
-            const gradLabel = createTextSprite(i.toString(), 'black', 12);
+        for (let i = 0; i <= 2; i++) {
+            const gradLabel = createTextSprite(i.toString(), 'black', 36);
             gradLabel.position.set(AXIS_START_X + 2*i+3, AXIS_START_Y - GRAD_OFFSET, AXIS_START_Z); // Position at absolute 1,2,3
             scene.add(gradLabel);
         }
@@ -435,13 +435,13 @@ for (let i = 1; i <=5; i++) {
         const yAxis = new THREE.Line(yAxisGeometry, yAxisMaterial);
         scene.add(yAxis);
 
-        const linhasLabel = createTextSprite('LINHA', 'black', 15);
+        const linhasLabel = createTextSprite('LINHA', 'black', 24);
         linhasLabel.position.set(AXIS_START_X,2 -AXIS_START_Y - AXIS_LENGTH - LABEL_OFFSET, AXIS_START_Z);
         scene.add(linhasLabel);
 
         // Y-axis graduations (1, 2, 3)
-        for (let i = 0; i <= 1; i++) {
-            const gradLabel = createTextSprite(i.toString(), 'black', 12);
+        for (let i = 0; i <= 2; i++) {
+            const gradLabel = createTextSprite(i.toString(), 'black', 36);
             gradLabel.position.set(AXIS_START_X, AXIS_START_Y -2*i-2, AXIS_START_Z - GRAD_OFFSET); // Position at absolute 1,2,3
             scene.add(gradLabel);
         }
