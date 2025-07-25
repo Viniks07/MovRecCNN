@@ -74,5 +74,5 @@ Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensi
 
  Outra maneira de pensarmos essa matriz matriz RGB é pensarmos uma matriz bidimensional onde sua componente $p_{m \times n}$ são listas **[R , G , B]** que definem a cor daquele pixel como mostra a figura.
 
- <img src="media/image/rgb_scale.png" width="300" height="300" style="object-fit: contain;" />
+ <img src="media/image/rgb_scale.png" width="600" height="600" style="object-fit: contain;" />
 >Caso queira ver o codigo que eu criei para representar de maneira interativa como funciona um  [clique aqui](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
