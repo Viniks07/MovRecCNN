@@ -70,10 +70,10 @@ A matriz **RGB** é uma matriz tridimensional (***Tensor***) composta por 3 cana
 
 Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensionais emplihadas como mostra a figura.
 
- ![Matrizes Empilhadas](media/image/rgb_scale.png) 
+ ![Matrizes Empilhadas](media/image/rgb_matrix.png) 
 
  Outra maneira de pensarmos essa matriz matriz RGB é pensarmos uma matriz bidimensional onde sua componente $p_{m \times n}$ são listas **[R , G , B]** que definem a cor daquele pixel como mostra a figura.
 
- ![Escala RGB](media\image\rgb_scale.png)
-
+ ![Escala RGB](media/image/rgb_scale.png)
+media/image/rgb_matrix.png
 >Caso queira ver o codigo que eu criei para representar de maneira interativa como funciona um  [clique aqui](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
