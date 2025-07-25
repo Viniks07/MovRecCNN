@@ -70,7 +70,7 @@ A matriz **RGB** é uma matriz tridimensional (***Tensor***) composta por 3 cana
 
 Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensionais emplihadas como mostra a figura.
 
- ![Matrizes Empilhadas](media\image\rgb_matrix.png) 
+ ![Matrizes Empilhadas](media/image/rgb_scale.png) 
 
  Outra maneira de pensarmos essa matriz matriz RGB é pensarmos uma matriz bidimensional onde sua componente $p_{m \times n}$ são listas **[R , G , B]** que definem a cor daquele pixel como mostra a figura.
 
