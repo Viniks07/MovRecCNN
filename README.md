@@ -36,24 +36,29 @@ E por falar em matrizes, está na hora de abordarmos o elemento central de todo 
 
 # **A Matriz**
 
-A matriz é uma das principais representações de imagem digitalmente e nós abordaremos sua estrutura
+A matriz é uma das principais formas de representar uma imagem digitalmente, vamos abordar abaixo sua estrutura.
 
 ### **Resolução**
 
-Na matriz — como representação de imagem — o numero e disposição de pixel define a **resolução** da imagem por exemplo imagens *full HD* corresponde a $\mathbf{1920\times1080}$.  
+Na matriz — como representação de imagem — o numero e disposição de pixel define a **resolução** da imagem. Por exemplo, imagens *Full HD* correspondem a  $\mathbf{1920\times1080}$.  
 
-Normalmente quando trabalhamos com imagens a primeira dimensão costuma indicar o numero de colunas $\mathbf{(1920)}$ e a segunda o numero de linhas $\mathbf{(1080)}$. No entanto no contexto da algebra — que é o nosso —  a primeira dimensão sera o numero de linhas e a segunda o numero de colunas portanto seu formato seria $\mathbf{(1080\times1920)}$.   
+Normalmente quando trabalhamos com imagens a primeira dimensão
+costuma indicar o numero de colunas $\mathbf{(1920)}$ e a segunda
+o numero de linhas $\mathbf{(1080)}$. Porém, quando tratamos do
+ponto de vista algébrico — que é o nosso caso — a primeira
+dimensão será o número de linhas, e a segunda, o número de
+colunas, portanto, seu formato seria $\mathbf{(1080 \times 1920)}$.  
 ( ***Mantenha isso em mente para evitar confusões*** )
 
-Por tanto a resolução é definida pela matriz ${m \times n}$, sendo ${m}$ o numero de linhas e ${n}$ o numero de colunas.
+Portanto a resolução é definida pela matriz ${m \times n}$, sendo ${m}$ o numero de linhas e ${n}$ o numero de colunas.
 
 
-### **Canais**
+## **Canais**
 
-Vamos restringir nosso foco a apenas **dois tipos** de matrizes as que possuem 1 canal e as que possuem 3 canais
+Vamos restringir nosso foco a **dois tipos** de matrizes: as que possuem 1 canal e as que possuem 3 canais
 
-#### **Escala de cinza**
-A matriz com apenas 1 canal produz uma imagem em escala de cinza onde cada componente $p_{m \times n}$ é um numero de **0** a **255** (***1 byte***).
+### **Escala de cinza**
+A matriz com apenas 1 canal produz uma imagem em escala de cinza onde cada elemento $p_{m \times n}$ é um número de **0** a **255** (***1 byte***).
 Sendo **0** o mais proximo do **preto** e **255** o mais o proximo de **branco**  
 
 A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar conceitualmente como funciona o posicionamento de cada pixel e os valores dentro deles de ambos os tipos de matrizes.
@@ -64,16 +69,21 @@ Abaixo temos um exemplo mais "realista" de uma imagem em escala de cinza
 
 ![Matriz RGB](media/image/gray_matrix.png)
 
-#### **RGB**
-A matriz **RGB** é uma matriz tridimensional (***Tensor***) composta por 3 canais de cores onde cada componente $p_{m \times n \times c}$ é a representação de cada uma dessas cores **RGB** — (***Vermelho***, ***Verde***, ***Azul***) — e vai de 0 a 255  
-(3 canais de ***1 byte*** portanto cada pixel tem ***3 bytes***) 
+### **RGB**
+A matriz **RGB** é uma matriz tridimensional (***Tensor***) composta por 3 canais de cores onde cada elemento $p_{m \times n \times c}$ é a representação de cada uma dessas cores **RGB** — (***Vermelho***, ***Verde***, ***Azul***) — e vai de 0 a 255  
+(3 canais de ***1 byte*** cada; Logo, cada pixel ocupa ***3 bytes***)  
 
-Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensionais emplihadas como mostra a figura.
+Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensionais **empilhadas** como mostra a figura.  
 
- <img src="media/image/rgb_matrix.png" width="600" height="600" style="object-fit: contain;" />
+<img src="media/image/rgb_matrix.png" width="600" height="600" style="object-fit: contain;" />  
 
- Outra maneira de pensarmos essa matriz matriz RGB é pensarmos uma matriz bidimensional onde sua componente $p_{m \times n}$ são listas **[R , G , B]** que definem a cor daquele pixel como mostra a figura.
+Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m \times n}$ são triplas **[R , G , B]** e a imagem completa é uma matriz $M_{(m \times n \times 3)}$ que definem a cor daquele pixel como mostra a figura.  
 
- <img src="media/image/rgb_scale.png" width="600" height="600" style="object-fit: contain;" />
+<img src="media/image/rgb_scale.png" width="600" height="600" style="object-fit: contain;" />  
 
->Caso queira ver o codigo que eu criei para representar de maneira interativa como funciona um [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
+>Caso queira ver um codigo que eu criei para representar de maneira interativa como funciona um [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
+
+Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em processamento de imagens e aprendizado de máquina. A matriz não é apenas uma forma de organizar os pixels, mas sim a base que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
+
+
+
