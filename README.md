@@ -81,7 +81,7 @@ Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional 
 
 <img src="media/image/rgb_scale.png" width="600" height="600" style="object-fit: contain;" />  
 
->Caso queira ver um codigo que eu criei para representar de maneira interativa como funciona um [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
+>Caso queira ver um codigo que eu criei para representar de maneira interativa como funciona uma [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
 
 Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em **processamento de imagens** e **aprendizado de máquina**. A matriz não é apenas uma forma de organizar os pixels, mas sim a base que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
 

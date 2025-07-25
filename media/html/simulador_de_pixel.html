@@ -371,45 +371,52 @@ for (let col = 0; col < totalCols; col++) {
     // Cria os 6 pontos para baixo
     for (let row = 0; row < 6; row++) {
         const y = -row * spacingY;
-        createColoredDot(0xff0000, x, y, -spacingZ);
-    }
 
-    // Cria o ponto extra
-    const extraY = -5 * spacingY;
-    const nextX = col < totalCols - 1 ? x + 0 : x;
-    createColoredDot(0xff0000, nextX, extraY, -spacingZ);
+        // Evita criar no ponto (0, 0, -spacingZ)
+        if (!(x === 0 && y === 0)) {
+            const radius = 0.2 / (col/2 + row/2 + 1);
+            const geometry = new THREE.SphereGeometry(radius, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.set(x, y, -spacingZ);
+            scene.add(sphere);
+        }
+    }
 }
 
+for (let col = 0; col < totalCols; col++) {
+    const x = col * spacingX;  // colunas avançam no X
+
+    for (let row = 0; row < 6; row++) {
+        const y = -row * spacingY;  // dentro da coluna, descem no Y
+
+        // Se quiser evitar o ponto (0, 0, 0):
+        if (!(x === 0 && y === 0)) {
+            const radius = 0.2 / (col/2 + row/2 + 1);
+            const geometry = new THREE.SphereGeometry(radius, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.set(x, y, 0);  // Z fixo em 0, plano XY
+            scene.add(sphere);
+        }
+    }
+}
 
 for (let col = 0; col < totalCols; col++) {
     const x = col * spacingX;
 
-    // Cria os 6 pontos para baixo
     for (let row = 0; row < 6; row++) {
         const y = -row * spacingY;
-        createColoredDot(0x00ff00, x, y, 0);
+
+        if (!(x === 0 && y === 0)) {
+            const radius = 0.2 / (col/2 + row/2 + 1);
+            const geometry = new THREE.SphereGeometry(radius, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.set(x, y, spacingZ);
+            scene.add(sphere);
+        }
     }
-
-    // Cria o ponto extra
-    const extraY = -5 * spacingY;
-    const nextX = col < totalCols - 1 ? x + 0 : x;
-    createColoredDot(0x00ff00, nextX, extraY, 0);
-}
-
-for (let col = 0; col < totalCols; col++) {
-    const x = col * spacingX;
-
-    // Cria os 6 pontos para baixo
-    for (let row = 0; row < 6; row++) {
-        const y = -row * spacingY;
-        createColoredDot(0x0000ff, x, y, spacingZ);
-    }
-
-    // Cria o ponto extra
-    const extraY = -5 * spacingY;
-    const nextX = col < totalCols - 1 ? x + spacingX : x;
-    createColoredDot(0x0000ff, nextX, extraY, spacingZ);
-
 }
 
 
