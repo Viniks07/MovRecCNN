@@ -79,7 +79,7 @@ Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensi
 
 Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m \times n}$ são triplas **[R , G , B]** e a imagem completa é uma matriz $M_{(m \times n \times 3)}$ que definem a cor daquele pixel como mostra a figura.  
 
-![RGP Representado por lista](media\image\rgb_list_representation.png)
+![RGP Representado por lista](media/image/rgb_list_representation.png)
 
 >Caso queira ver de maneira interativa como funciona uma [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
 
