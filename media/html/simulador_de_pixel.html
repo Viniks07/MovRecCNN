@@ -184,7 +184,7 @@
         
         controls.minPolarAngle = 0; // Não permite olhar para baixo
         controls.maxPolarAngle = Math.PI / 2; // Não permite olhar para baixo (máximo 90 graus)
-        controls.minAzimuthAngle = -Math.PI / 2; // Limita rotação horizontal à esquerda
+        controls.minAzimuthAngle = 0; // Limita rotação horizontal à esquerda
         controls.maxAzimuthAngle = Math.PI / 2; // Limita rotação horizontal à direita
 
         // --- Definir a posição inicial da câmera ---
@@ -359,28 +359,59 @@
         const greenPlane = createInteractiveSquare('green', 255, 0, 0, 0, 0x00ff00);
         const bluePlane = createInteractiveSquare('blue', 255, 0, 0, spacingZ, 0x0000ff);
 
-        // --- Add dots to each main square ---
-        for (let i = 1; i <= 7; i++) {
-            const offsetX = dotOffset + i * 0.3;
-            const offsetY = -dotOffset - i * 0.3;
-            createColoredDot(0xff0000, offsetX+i, 0, -spacingZ);       // lado
-            createColoredDot(0xff0000, 0, offsetY-i, -spacingZ);       // embaixo
-            createColoredDot(0xff0000, offsetX+i/2, offsetY-i/2, -spacingZ);  // diagonal
-        }
-        for (let i = 1; i <= 7; i++) {
-            const offsetX = dotOffset + i * 0.3;
-            const offsetY = -dotOffset - i * 0.3;
-            createColoredDot(0x00ff00, offsetX+i, 0, 0);
-            createColoredDot(0x00ff00, 0, offsetY-i, 0);
-            createColoredDot(0x00ff00, offsetX+i/2, offsetY-i/2, 0);
-        }
-        for (let i = 1; i <=7; i++) {
-            const offsetX = dotOffset + i * 0.3;
-            const offsetY = -dotOffset - i * 0.3;
-            createColoredDot(0x0000ff, offsetX+i, 0, spacingZ);
-            createColoredDot(0x0000ff, 0, offsetY-i, spacingZ);
-            createColoredDot(0x0000ff, offsetX+i/2, offsetY-i/2, spacingZ);
-        }
+const totalCols = 6;  // Quantas "colunas" (anda para o lado e cria pontos)
+const spacingX = 2; // Passo horizontal entre colunas
+const spacingY = 2;   // Espaço vertical entre pontos
+
+
+
+for (let col = 0; col < totalCols; col++) {
+    const x = col * spacingX;
+
+    // Cria os 6 pontos para baixo
+    for (let row = 0; row < 6; row++) {
+        const y = -row * spacingY;
+        createColoredDot(0xff0000, x, y, -spacingZ);
+    }
+
+    // Cria o ponto extra
+    const extraY = -5 * spacingY;
+    const nextX = col < totalCols - 1 ? x + 0 : x;
+    createColoredDot(0xff0000, nextX, extraY, -spacingZ);
+}
+
+
+for (let col = 0; col < totalCols; col++) {
+    const x = col * spacingX;
+
+    // Cria os 6 pontos para baixo
+    for (let row = 0; row < 6; row++) {
+        const y = -row * spacingY;
+        createColoredDot(0x00ff00, x, y, 0);
+    }
+
+    // Cria o ponto extra
+    const extraY = -5 * spacingY;
+    const nextX = col < totalCols - 1 ? x + 0 : x;
+    createColoredDot(0x00ff00, nextX, extraY, 0);
+}
+
+for (let col = 0; col < totalCols; col++) {
+    const x = col * spacingX;
+
+    // Cria os 6 pontos para baixo
+    for (let row = 0; row < 6; row++) {
+        const y = -row * spacingY;
+        createColoredDot(0x0000ff, x, y, spacingZ);
+    }
+
+    // Cria o ponto extra
+    const extraY = -5 * spacingY;
+    const nextX = col < totalCols - 1 ? x + spacingX : x;
+    createColoredDot(0x0000ff, nextX, extraY, spacingZ);
+
+}
+
 
         // --- Add Axes with Labels and Graduations ---
         // Keeping axis definition as per user's instruction "não altere os eixos (tamanhp nem posiçã)"
