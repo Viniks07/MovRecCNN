@@ -76,4 +76,4 @@ Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensi
 
  <img src="media/image/rgb_scale.png" width="600" height="600" style="object-fit: contain;" />
 
->Caso queira ver o codigo que eu criei para representar de maneira interativa como funciona um  [clique aqui](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
+>Caso queira ver o codigo que eu criei para representar de maneira interativa como funciona um [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
