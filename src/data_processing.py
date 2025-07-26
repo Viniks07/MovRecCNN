@@ -1,6 +1,7 @@
 import numpy as np
 import time
 
+
 def mirroring(cam_frame):
     return cam_frame[:,::-1,:].copy()
 
