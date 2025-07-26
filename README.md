@@ -95,7 +95,7 @@ Compreender a estrutura matricial será fundamental para o entendimento deste pr
 
 Após uma breve explicação sobre matrizes, entraremos de fato na primeira etapa do projeto: o pré-processamento. Nesta fase, veremos código real e exploraremos as funções que foram criadas e implementadas por mim. Para isso, utilizaremos a melhor biblioteca do `Python` — na minha humilde opinião — o **`NumPy`**.  
 
-Todas essas funções foram criadas para auxiliar o processo e todas se encontram no modulo **[data_processing.py](../src/data_processing.py)**
+Todas essas funções foram criadas para auxiliar o processo e todas se encontram no modulo **[data_processing.py](https://github.com/Viniks07/MovRecCNN/blob/main/src/data_processing.py)**
 
 Essa é a Nina e ela vai nos ajudar a demonstrar o efeito das funções nas imagens  
 
