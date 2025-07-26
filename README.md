@@ -235,3 +235,22 @@ O processo da função ``centralize`` segue os seguintes passos:
 - Aplica **padding com pixels nulos** (*preto*) para que a imagem final mantenha o mesmo tamanho da original.
 
 Assim, garantimos que o modelo aprenda somente as poses e não use a posição do objeto como fator decisivo.
+
+![Wave Centralized](media/image/wave_centralize.gif)
+
+# Data Set
+
+
+![Work Work](media/image/work_work.gif)
+
+
+
+[**WORK WORK  . . .**](https://www.youtube.com/watch?v=eO6OaVnbqaY)
+# A CNN
+
+
+![Work Work](media/image/work_work.gif)
+
+
+
+[**WORK WORK  . . .**](https://www.youtube.com/watch?v=eO6OaVnbqaY)
