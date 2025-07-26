@@ -10,18 +10,9 @@ def gray_scale(cam_frame):
         raise ValueError('O Frame deve ter canais de cores')
 
     return np.dot(cam_frame[:,:,:],[0.114, 0.587, 0.299]).astype(np.uint8)
- 
-
-def binarization(cam_frame,limiar = 127):
-    if cam_frame.ndim != 2:
-        raise ValueError('O Frame deve ser bidimensional (grayscale).')
-
-    cam_frame = cam_frame.copy()
-   
-    return np.where(cam_frame < limiar, 0, 255).astype(np.uint8)
 
 
-def background_subtraction(cam_frame, start_time=3, limiar=15):
+def background_subtraction(cam_frame, start_time=0.1, limiar=15):
     cam_frame = cam_frame.copy()
 
     if cam_frame.ndim != 2:
@@ -41,6 +32,15 @@ def background_subtraction(cam_frame, start_time=3, limiar=15):
         cam_frame[np.abs(cam_frame - background_subtraction.background) < limiar] = 0
 
     return cam_frame.astype(np.uint8)
+
+
+def binarization(cam_frame,limiar = 127):
+    if cam_frame.ndim != 2:
+        raise ValueError('O Frame deve ser bidimensional (grayscale).')
+
+    cam_frame = cam_frame.copy()
+   
+    return np.where(cam_frame < limiar, 0, 255).astype(np.uint8)
 
 
 def down_sampling(cam_frame,division= 16):    
@@ -127,6 +127,7 @@ def centralize(sample, bbox_points):
     cut_image = cut_image[:total_height,:total_width]
 
     return cut_image.astype(np.uint8)
+
 
 def dilate(frame, kernel, iterations=1):
     frame = frame.copy()

@@ -4,7 +4,7 @@
 
 1.  **[Apresentação](#apresentação)**
 2.  **[A Matriz](#a-matriz)**
-3.  **[Pré-Processamento](#pré-processamento-1)**  
+3.  **[Pré-Processamento](#pré-processamento)**  
 
 # **Apresentação**
 Olá! Meu nome é **[Vinícius Fonseca](https://www.linkedin.com/in/vinicius-silva-fonseca/)** e sou estudante de graduação em **Matemática** na **[UEL - Universidade Estadual de Londrina](https://portal.uel.br/conheca-a-uel/)**.  
@@ -91,6 +91,32 @@ Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional 
 
 Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em **processamento de imagens** e **aprendizado de máquina**. A matriz não é apenas uma forma de organizar os pixels, mas sim a base que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
 
-# Pré-Processamento
+# **Pré-Processamento**
 
-Após uma breve explicação sobre matrizes, entraremos de fato na primeira etapa do projeto: o pré-processamento. Nesta fase, veremos código real e exploraremos as funções que foram criadas e implementadas por mim. Para isso, utilizaremos a melhor biblioteca do `Python` — na minha humilde opinião — o `NumPy`.
+Após uma breve explicação sobre matrizes, entraremos de fato na primeira etapa do projeto: o pré-processamento. Nesta fase, veremos código real e exploraremos as funções que foram criadas e implementadas por mim. Para isso, utilizaremos a melhor biblioteca do `Python` — na minha humilde opinião — o **`NumPy`**.  
+
+Todas essas funções foram criadas para auxiliar o processo e todas se encontram no modulo **[data_processing.py](../src/data_processing.py)**
+
+Essa é a Nina e ela vai nos ajudar a demonstrar o efeito das funções nas imagens  
+
+![Nina](media/image/nina.png)
+
+## Mirroring
+
+A primeira função criada foi a de espelhamento, pois estamos acostumados a nos ver no espelho — e por isso, quando vemos uma imagem espelhada, nos parece mais natural. Essa função é importante para ajustar imagens que, de outra forma, poderiam parecer “ao contrário” ou invertidas.
+
+![Nina Mirroring](media/image/nina_mirroring.png)
+
+## Gray Scale
+
+A segunda função multiplica o vetor de canais de cor por uma matriz (ou vetor) de pesos pré-estabelecida. Pelas propriedades da multiplicação matricial, o resultado é um escalar que corresponde ao valor em escala de cinza.
+
+Matematicamente:
+
+$$ \left[\begin{array}{ccc}B,G,R\end{array}\right] \times \left[\begin{array}{c}0.114 \\0.587 \\0.299\end{array}\right] = GS$$  
+
+onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.
+
+![Nina Gray Scale](media/image/nina_grayscale.png)
+
+
