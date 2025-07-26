@@ -113,12 +113,10 @@ A segunda função multiplica o vetor de canais de cor por uma matriz (ou vetor)
 
 Matematicamente:
 
-$$
-\begin{bmatrix} B, & G, & R \end{bmatrix} \times \begin{bmatrix} 0.114 \\ 0.587 \\ 0.299 \end{bmatrix} = Gs
-$$ 
+$$ \left[\begin{array}{ccc}B,G,R\end{array}\right] \times \left[\begin{array}{ccc}0.114,0.587,0.299\end{array}\right]^T = GS$$  
 
-onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.
-
+onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.  
+(**Disclaimer:** *Apesar da matriz ser RGB o `OpenCv` lê as matrizes como BGR*)
 ![Nina Gray Scale](media/image/nina_grayscale.png)
 
 
