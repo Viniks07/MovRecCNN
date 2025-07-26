@@ -35,7 +35,7 @@ def background_subtraction(cam_frame, start_time=0.1, limiar=15):
     return cam_frame.astype(np.uint8)
 
 
-def binarization(cam_frame,limiar = 127):
+def binarization(cam_frame,limiar = 5):
     if cam_frame.ndim != 2:
         raise ValueError('O Frame deve ser bidimensional (grayscale).')
 
@@ -44,7 +44,7 @@ def binarization(cam_frame,limiar = 127):
     return np.where(cam_frame < limiar, 0, 255).astype(np.uint8)
 
 
-def dilate(frame, kernel, iterations=1):
+def dilate(frame, kernel = np.ones(dtype=np.uint8,shape=(16,16)), iterations=1):
     frame = frame.copy()
     for _ in range(iterations):
         padded = np.pad(frame, 

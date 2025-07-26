@@ -189,4 +189,30 @@ A função pode ser usada em ambos os formatos:
 
  ![Nina Downsample Gray](media/image/nina_downsample.png)
 
-<b>*Aviso</b> : <i>As referencias a direita não são os resultados reais eles são apenas representações. As imagens reais são minusculas comparadas a imagem original(***não processada***)</i>
+<b>*Aviso</b> : <i>As referencias a direita não são os resultados reais eles são apenas representações(**visualizer**). As imagens reais são minúsculas comparadas a imagem original(***não processada***)</i>
+
+## Bounding Box
+
+A bounding box é um retângulo que delimita o objeto de interesse em uma imagem, sendo usada para identificá-lo e localizar sua posição.
+
+
+A função implementada identifica o objeto com base em uma imagem binarizada: ela procura as colunas e linhas onde o objeto aparece (ou seja, onde os pixels são diferentes de zero) e utiliza essas posições para construir os quatro lados do retângulo.
+
+
+Essa caixa delimitadora é retornada e os vertices são marcados, pois serão necessários futuramente. Dessa forma, a imagem binarizada serve como um mapa espacial da posição do objeto na imagem original.
+
+![Nina Bounding Box](media/image/nina_bounding_box.png)
+
+
+E para imagens em movimento — **Vídeo** e **.gif**:
+
+![Wave Bounding Box](media/image/wave_bounding_box.gif)
+
+Chegou o momento de nos despedirmos da Nina — ela foi essencial até aqui, mas a próxima função pede um pouco mais de movimento.
+
+Antes de avançarmos, vamos rever o processo pelo qual cada frame passou. Isso nos ajudará a entender como chegamos ao resultado final.
+
+
+![Nina Final Result](media/image/nina_final_result.gif)
+
+## Centralize
