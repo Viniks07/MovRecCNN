@@ -117,9 +117,31 @@ Matematicamente:
 
 onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.  
 
-<u><b>*Aviso</b> : <i>Apesar da matriz ser RGB o `OpenCv` lê as matrizes como BGR</i></u>
+<b>*Aviso</b> : <i>Apesar da matriz ser RGB o `OpenCv` lê as matrizes como BGR</i>
 
 ![Nina Gray Scale](media/image/nina_grayscale.png)
 
 ## Background Subtraction
 
+A remoção do fundo foi, sem dúvida, o maior desafio desta etapa do projeto.Embora estejamos demonstrando as funções com imagens estáticas, o objetivo final é trabalhar com vídeos, o que exige uma técnica que possa remover o fundo de forma dinâmica.
+
+
+A primeira abordagem que implementei foi um método de **``Chroma Key``**, que removia a cor de fundo dinamicamente, baseando-se no **desvio padrão de um valor RGB** capturado dentro de uma região delimitada por outra função chamada ``Target``. Essa função analisava todos os pixels contidos dentro do quadrado gerado para definir a cor a ser excluída.
+
+
+Apesar de ser uma solução criativa, essa abordagem apresentava uma limitação significativas: ela dependia do uso de uma cor sólida e dentro de um espectro de cores bastante específico, o que restringia seu uso.
+
+Depois de pesquisar, encontrei uma alternativa que atendeu muito melhor ao propósito: a técnica de ``Background Subtraction``.
+
+
+A ideia é simples, mas eficaz:
+
+1. Assume-se uma câmera estática.
+
+2. Um frame vazio (sem o objeto de interesse) é capturado como referência.
+
+3. A partir desse frame de referência, um limite é definido. Qualquer pixel nos frames subsequentes que varie menos que esse limite em comparação com o frame de referência é considerado parte do fundo e é "apagado".
+
+Dessa forma, quando o fundo é igual ao frame de referência, a tela permanece preta. Mas assim que um objeto entra em cena, seus pixels diferem drasticamente do frame de referência, fazendo com que o objeto se destaque claramente na imagem. Essa abordagem provou ser muito mais robusta e adequada para a detecção dinâmica de movimento em vídeos.
+
+![Nina Background Subtraction](media/image/nina_background_subtraction.png)
