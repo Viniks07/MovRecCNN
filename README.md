@@ -216,3 +216,22 @@ Antes de avançarmos, vamos rever o processo pelo qual cada frame passou. Isso n
 ![Nina Final Result](media/image/nina_final_result.gif)
 
 ## Centralize
+
+Chegamos agora à nossa última função de pré-processamento. A função ``centralize`` tem como objetivo **manter o objeto centralizado horizontalmente** na imagem.
+
+Mas por que isso é necessário?
+
+Nosso objetivo é que o modelo aprenda a **reconhecer gestos**, e **não a posição do objeto na imagem**. Se não centralizarmos, o modelo pode acabar associando uma determinada posição à classe, e não ao gesto em si. Por exemplo, se uma pose for sempre feita no lado direito da imagem, o modelo poderá interpretar a **posição**, e não o **formato da pose**, como critério de classificação.
+
+
+O processo da função ``centralize`` segue os seguintes passos:
+
+- Recorta o objeto com base nos vértices obtidos pela função ``bounding_box``.
+
+- Calcula o **centro de massa horizontal** do objeto (*com base nos pixels brancos*).
+
+- **Centraliza** o objeto horizontalmente na imagem com base no centro de massa.
+
+- Aplica **padding com pixels nulos** (*preto*) para que a imagem final mantenha o mesmo tamanho da original.
+
+Assim, garantimos que o modelo aprenda somente as poses e não use a posição do objeto como fator decisivo.
