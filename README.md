@@ -1,5 +1,10 @@
-
 ![wave](media/image/wave.gif)
+
+# Sumário  
+
+1.  **[Apresentação](#apresentação)**
+2.  **[A Matriz](#a-matriz)**
+3.  **[Pré-Processamento](#pré-processamento-1)**  
 
 # **Apresentação**
 Olá! Meu nome é **[Vinícius Fonseca](https://www.linkedin.com/in/vinicius-silva-fonseca/)** e sou estudante de graduação em **Matemática** na **[UEL - Universidade Estadual de Londrina](https://portal.uel.br/conheca-a-uel/)**.  
@@ -53,11 +58,11 @@ colunas, portanto, seu formato seria $\mathbf{(1080 \times 1920)}$.
 Portanto a resolução é definida pela matriz ${m \times n}$, sendo ${m}$ o numero de linhas e ${n}$ o numero de colunas.
 
 
-## **Canais**
+### **Canais**
 
 Vamos restringir nosso foco a **dois tipos** de matrizes: as que possuem 1 canal e as que possuem 3 canais
 
-### **Escala de cinza**
+#### **Escala de cinza**
 A matriz com apenas 1 canal produz uma imagem em escala de cinza onde cada elemento $p_{m \times n}$ é um número de **0** a **255** (***1 byte***).
 Sendo **0** o mais proximo do **preto** e **255** o mais o proximo de **branco**  
 
@@ -69,8 +74,9 @@ Abaixo temos um exemplo mais "realista" de uma imagem em escala de cinza
 
 ![Matriz RGB](media/image/gray_matrix.png)
 
-### **RGB**
-A matriz **RGB** é uma matriz tridimensional (***Tensor***) composta por 3 canais de cores onde cada elemento $p_{m \times n \times c}$ é a representação de cada uma dessas cores **RGB** — (***Vermelho***, ***Verde***, ***Azul***) — e vai de 0 a 255  
+#### **RGB**
+A matriz **RGB** é uma matriz tridimensional 
+(***[Tensor](https://medium.com/@michel.macario/sem-tensores-n%C3%A3o-h%C3%A1-intelig%C3%AAncia-artificial-62cae98b7e88)***) composta por 3 canais de cores onde cada elemento $p_{m \times n \times c}$ é a representação de cada uma dessas cores **RGB** — (***Vermelho***, ***Verde***, ***Azul***) — e vai de 0 a 255  
 (3 canais de ***1 byte*** cada; Logo, cada pixel ocupa ***3 bytes***)  
 
 Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensionais **empilhadas** como mostra a figura.  
@@ -79,7 +85,7 @@ Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensi
 
 Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m \times n}$ são triplas **[R , G , B]** e a imagem completa é uma matriz $M_{(m \times n \times 3)}$ que definem a cor daquele pixel como mostra a figura.  
 
-![RGP Representado por lista](media\image\rgb_list_representation.png)
+![RGP Representado por lista](media/image/rgb_list_representation.png)
 
 >Caso queira ver de maneira interativa como funciona uma [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
 
@@ -87,3 +93,4 @@ Compreender a estrutura matricial será fundamental para o entendimento deste pr
 
 # Pré-Processamento
 
+Após uma breve explicação sobre matrizes, entraremos de fato na primeira etapa do projeto: o pré-processamento. Nesta fase, veremos código real e exploraremos as funções que foram criadas e implementadas por mim. Para isso, utilizaremos a melhor biblioteca do `Python` — na minha humilde opinião — o `NumPy`.
