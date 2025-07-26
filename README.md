@@ -70,7 +70,7 @@ A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar co
 
 ![Representação Matriz](media/image/matrix_representation.png)  
 
-Abaixo temos um exemplo mais "realista" de uma imagem em escala de cinza 
+Abaixo temos um exemplo de como isso funciona em escala de cinza 
 
 ![Matriz RGB](media/image/gray_matrix.png)
 
@@ -117,7 +117,7 @@ Matematicamente:
 
 onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.  
 
-<b>*Aviso</b> : <i>Apesar da matriz ser RGB o `OpenCv` lê as matrizes como BGR</i>
+<b>*Aviso</b> : <i>Apesar da matriz ser **RGB** o `OpenCv` lê as matrizes como **BGR**</i>
 
 ![Nina Gray Scale](media/image/nina_grayscale.png)
 
@@ -142,6 +142,51 @@ A ideia é simples, mas eficaz:
 
 3. A partir desse frame de referência, um limite é definido. Qualquer pixel nos frames subsequentes que varie menos que esse limite em comparação com o frame de referência é considerado parte do fundo e é "apagado".
 
-Dessa forma, quando o fundo é igual ao frame de referência, a tela permanece preta. Mas assim que um objeto entra em cena, seus pixels diferem drasticamente do frame de referência, fazendo com que o objeto se destaque claramente na imagem. Essa abordagem provou ser muito mais robusta e adequada para a detecção dinâmica de movimento em vídeos.
+Dessa forma, quando o fundo é igual ao frame de referência, a tela permanece preta. Mas assim que um objeto entra em cena, seus pixels diferem do frame de referência, fazendo com que o objeto se destaque na imagem. Essa abordagem provou ser muito mais robusta para a detecção de movimento em vídeos.
 
 ![Nina Background Subtraction](media/image/nina_background_subtraction.png)
+
+## Binarization
+
+Após a remoção do fundo, a imagem é **binarizada** — *objeto vs. fundo*.
+
+- Todos os pixels pertencentes ao fundo permanecem ($0$).
+
+- O objeto destacado recebe um valor de contraste máximo, normalmente branco ($255$).
+
+Essa binarização facilita os proximos passos — como segmentação, contorno e detecção de movimento.
+
+
+![Nina Binarizada](media/image/nina_binarization.png)
+
+## Dilate
+
+Normalmente, após a binarização, a imagem destacada pode apresentar "buracos" — como, coincidentemente, aconteceu na imagem de referência — então aplicamos [Morfologia Matemática (***Dilatação***)](https://www.youtube.com/watch?v=E8cqrkK4L_M&list=PLLFpILRpgx7lJlHOl3TXGuUVWnqzgTITh&index=13) para preenchê-los.
+
+![Nina Dilatada](media/image/nina_dilate.png)
+
+## Down Sampling
+
+O downsampling foi o segundo grande desafio desta parte do projeto. Apesar de todos os processos de pré-processamento, não é viável usar a imagem completa como input do modelo. Pense na resolução que usamos aqui, de ($480 \times 640$), que corresponde a aproximadamente $\textbf{307}$ **mil pixels**!  
+Processar tantos dados seria ineficiente e pesado.
+
+É exatamente por isso que implementei a função ``down_sampling``. Ela é responsável por diminuir o tamanho da imagem. Basicamente, a função cria uma nova matriz em branco, cujo shape (***dimensões***) é o da imagem original dividido por um valor ``division``.
+
+Em seguida, ela percorre a imagem original usando uma "**janela**" (***matriz quadrada***) com o tamanho definido por ``division``. Para cada uma dessas janelas, a função calcula a média dos valores dos pixels contidos nela. Esse valor médio é então usado para preencher o pixel correspondente na matriz de amostra reduzida.
+
+Dessa forma, conseguimos uma representação menor da imagem, mantendo as informações essenciais, mas com um volume de dados muito mais adequado para as próximas etapas do projeto.
+
+*Ex:* $\ 480 \times 640\ (307\ mil\ pixels)  →  \ 30\times40\ (1200 \ pixels)$
+
+A função pode ser usada em ambos os formatos:
+
+- Cinza
+
+ ![Nina Downsample Gray](media/image/nina_downsample_gray.png)
+
+- RGB 
+
+
+ ![Nina Downsample Gray](media/image/nina_downsample.png)
+
+<b>*Aviso</b> : <i>As referencias a direita não são os resultados reais eles são apenas representações. As imagens reais são minusculas comparadas a imagem original(***não processada***)</i>
