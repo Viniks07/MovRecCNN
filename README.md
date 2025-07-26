@@ -117,6 +117,8 @@ $$ \left[\begin{array}{ccc}B,G,R\end{array}\right] \times \left[\begin{array}{cc
 
 onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.  
 (**Disclaimer:** *Apesar da matriz ser RGB o `OpenCv` lê as matrizes como BGR*)
+
+
 ![Nina Gray Scale](media/image/nina_grayscale.png)
 
 
