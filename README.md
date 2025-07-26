@@ -33,7 +33,7 @@ Com esse pensamento, decidi iniciar este novo projeto chamado [MovRecCNN](https:
 
 - Bibliotecas nativas do ``Python``
 
-- ``numpy`` para manipulação de matrizes
+- ``NumPy`` para manipulação de matrizes
 
 - ``OpenCV`` ***será utilizado exclusivamente para leitura e escrita de vídeos e imagens***
 
@@ -109,7 +109,7 @@ A primeira função criada foi a de espelhamento, pois estamos acostumados a nos
 
 ## Gray Scale
 
-A segunda função multiplica o vetor de canais de cor por uma matriz (ou vetor) de pesos pré-estabelecida. Pelas propriedades da multiplicação matricial, o resultado é um escalar que corresponde ao valor em escala de cinza.
+A segunda função multiplica o vetor de canais de cor por uma matriz (*vetor-coluna*) de pesos pré-estabelecida. Pelas propriedades da multiplicação matricial, o resultado é um escalar que corresponde ao valor em escala de cinza.
 
 Matematicamente:
 
