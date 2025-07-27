@@ -13,7 +13,7 @@ def gray_scale(cam_frame):
     return np.dot(cam_frame[:,:,:],[0.114, 0.587, 0.299]).astype(np.uint8)
 
 
-def background_subtraction(cam_frame, start_time=0.1, limiar=15):
+def background_subtraction(cam_frame, start_time=0.1, limiar=30):
     cam_frame = cam_frame.copy()
 
     if cam_frame.ndim != 2:
