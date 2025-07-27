@@ -123,13 +123,13 @@ onde $GS$ — um número decimal que é convertido para um inteiro — represent
 
 ## Background Subtraction
 
-A remoção do fundo foi, sem dúvida, o maior desafio desta etapa do projeto.Embora estejamos demonstrando as funções com imagens estáticas, o objetivo final é trabalhar com vídeos, o que exige uma técnica que possa remover o fundo de forma dinâmica.
+A remoção do fundo foi, sem dúvida, o maior desafio desta etapa do projeto. Embora estejamos demonstrando as funções com imagens estáticas, o objetivo final é trabalhar com vídeos, o que exige uma técnica que possa remover o fundo de forma dinâmica.
 
 
 A primeira abordagem que implementei foi um método de **``Chroma Key``**, que removia a cor de fundo dinamicamente, baseando-se no **desvio padrão de um valor RGB** capturado dentro de uma região delimitada por outra função chamada ``Target``. Essa função analisava todos os pixels contidos dentro do quadrado gerado para definir a cor a ser excluída.
 
 
-Apesar de ser uma solução criativa, essa abordagem apresentava uma limitação significativas: ela dependia do uso de uma cor sólida e dentro de um espectro de cores bastante específico, o que restringia seu uso.
+Apesar de ser uma solução criativa, essa abordagem apresentava uma limitação significativa: ela dependia do uso de uma cor sólida e dentro de um espectro de cores bastante específico, o que restringia seu uso.
 
 Depois de pesquisar, encontrei uma alternativa que atendeu muito melhor ao propósito: a técnica de ``Background Subtraction``.
 
