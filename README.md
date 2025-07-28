@@ -82,7 +82,7 @@ Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensi
 
 <img src="media/image/rgb_matrix.png" width="600" height="600" style="object-fit: contain;" />  
 
-Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m, n}$ são triplas **[R , G , B]** que definem a cor daquele pixel como mostra a figura e a imagem completa é uma matriz $IM_{(m \times n \times 3)}$.  
+Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m, n}$ são triplas **[R , G , B]** que definem a cor daquele pixel como mostra a figura e o frame completo é uma matriz $F_{(m \times n \times 3)}$.  
 
 ![RGP Representado por lista](media/image/rgb_list_representation.png)
 
