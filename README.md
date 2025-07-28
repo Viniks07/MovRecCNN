@@ -35,7 +35,7 @@ Com esse pensamento, decidi iniciar este novo projeto chamado [MovRecCNN](https:
 
 - ``NumPy`` para manipulação de matrizes
 
-- ``OpenCV`` ***será utilizado exclusivamente para leitura e escrita de vídeos e imagens***
+- ``OpenCV`` ***será utilizado exclusivamente para testes, leitura e escrita de vídeos e imagens.***
 
 E por falar em matrizes, está na hora de abordarmos o elemento central de todo este projeto.
 
