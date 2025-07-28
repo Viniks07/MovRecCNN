@@ -1,9 +1,5 @@
 # MoveRecCNN
-![wave](media/image/wave.gif)  
-
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vinicius-silva-fonseca/)
-[![Email](https://img.shields.io/badge/Email-FF6600?style=for-the-badge)](mailto:vinicius.s.fonseca@outlook.com)
+![wave](media/image/wave.gif)
 
 # Sumário  
 
