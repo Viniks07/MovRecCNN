@@ -19,7 +19,7 @@ Naturalmente, a proximidade entre Matemática e Ciência de Dados me levou a apr
   - `OpenCV`
   - `YOLO`
 
-As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso de LLMs para Detecção de Fake News no Brasil***, no qual utilizei LLMs para gerar embeddings com o Ollama e os classifiquei com um Random Forest Classifier do `scikit-learn`, alcançando métricas $\text{\(\boldsymbol{f}_1\)\textbf{-macro} }$ entre $\textbf{88\%} $ (pior cenário) e $\textbf{99\%}$(cenário ideal).
+As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso de LLMs para Detecção de Fake News no Brasil***, no qual utilizei LLMs para gerar embeddings com o Ollama e os classifiquei com um Random Forest Classifier do `scikit-learn`, alcançando métricas $\textbf f_1 \textbf {-macro}$ entre ***88%*** (pior cenário) e ***99%*** (cenário ideal).
 
 >Confira o projeto aqui **→** [LLM4FakeNews](https://github.com/Viniks07/LLM4FakeNews)   
 
