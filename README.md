@@ -59,13 +59,13 @@ Portanto a resolução é definida pela matriz ${m \times n}$, sendo ${m}$ o num
 
 ### **Canais**
 
-Vamos restringir nosso foco a **dois tipos** de matrizes: as que possuem 1 canal e as que possuem 3 canais
+Vamos restringir nosso foco a **dois tipos** de matrizes: as que possuem **1 canal** e as que possuem **3 canais**.
 
 #### **Escala de cinza**
-A matriz com apenas 1 canal produz uma imagem em escala de cinza onde cada elemento $p_{m \times n}$ é um número de **0** a **255** (***1 byte***).
+A matriz com apenas **1 canal** produz uma imagem em **escala de cinza** onde cada elemento $p_{ m, n}$ é um número de **0** a **255** (***1 byte***).
 Sendo **0** o mais proximo do **preto** e **255** o mais o proximo de **branco**  
 
-A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar conceitualmente como funciona o posicionamento de cada pixel e os valores dentro deles de ambos os tipos de matrizes.
+A imagem abaixo representa uma matriz em escala de cinza mas pode nos mostrar conceitualmente como funciona o posicionamento de cada **pixel** e os valores dentro deles de ambos os tipos de matrizes.
 
 ![Representação Matriz](media/image/matrix_representation.png)  
 
@@ -75,18 +75,18 @@ Abaixo temos um exemplo de como isso funciona em escala de cinza
 
 #### **RGB**
 A matriz **RGB** é uma matriz tridimensional 
-(***[Tensor](https://medium.com/@michel.macario/sem-tensores-n%C3%A3o-h%C3%A1-intelig%C3%AAncia-artificial-62cae98b7e88)***) composta por 3 canais de cores onde cada elemento $p_{m \times n \times c}$ é a representação de cada uma dessas cores **RGB** — (***Vermelho***, ***Verde***, ***Azul***) — e vai de 0 a 255  
-(3 canais de ***1 byte*** cada; Logo, cada pixel ocupa ***3 bytes***)  
+(***[Tensor](https://medium.com/@michel.macario/sem-tensores-n%C3%A3o-h%C3%A1-intelig%C3%AAncia-artificial-62cae98b7e88)***) composta por **3 canais** de cores onde cada elemento $p_{m, n, c}$ é a representação de cada uma dessas cores **RGB** — (***Vermelho***, ***Verde***, ***Azul***) — e vai de **0** a **255**  
+(**3 canais** de ***1 byte*** cada; Logo, cada pixel ocupa ***3 bytes***)  
 
 Podemos pensar essa matriz tridimensional como um conjunto de matrizes bidimensionais **empilhadas** como mostra a figura.  
 
 <img src="media/image/rgb_matrix.png" width="600" height="600" style="object-fit: contain;" />  
 
-Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m \times n}$ são triplas **[R , G , B]** e a imagem completa é uma matriz $M_{(m \times n \times 3)}$ que definem a cor daquele pixel como mostra a figura.  
+Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional onde cada elemento $p_{m, n}$ são triplas **[R , G , B]** que definem a cor daquele pixel como mostra a figura e a imagem completa é uma matriz $IM_{(m \times n \times 3)}$.  
 
 ![RGP Representado por lista](media/image/rgb_list_representation.png)
 
->Caso queira ver de maneira interativa como funciona uma [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
+>Caso queira ver de maneira interativa como pode ser pensado esses tipos de [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html).
 
 Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em **processamento de imagens** e **aprendizado de máquina**. A matriz não é apenas uma forma de organizar os pixels, mas sim a base que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
 
