@@ -14,6 +14,7 @@
         /* O canvas onde a cena 3D será renderizada */
         canvas {
             display: block;
+            touch-action: none; /* Prevent browser touch actions like scrolling/zooming */
         }
         /* Estilos para o modal de entrada de número */
         .modal-overlay {
@@ -526,33 +527,56 @@ for (let col = 0; col < totalCols; col++) {
         const infoDiv = document.getElementById('info'); // Get the info div
         const rgbDisplayDiv = document.getElementById('rgbDisplay'); // Get the RGB display div
 
-        function onDocumentMouseDown(event) {
-            // Normalize mouse coordinates (from -1 to +1) relative to the canvas
+        function onPointerDown(event) {
+            event.preventDefault(); // Prevent default browser actions (like scrolling/zooming)
+
+            let clientX, clientY;
+
+            if (event.touches && event.touches.length > 0) {
+                // Handle touch events
+                clientX = event.touches[0].clientX;
+                clientY = event.touches[0].clientY;
+            } else {
+                // Handle mouse events
+                clientX = event.clientX;
+                clientY = event.clientY;
+            }
+
             const rect = renderer.domElement.getBoundingClientRect();
-            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
 
-            // Update the ray with the camera and mouse coordinates
             raycaster.setFromCamera(mouse, camera);
-
-            // Calculate objects intersecting the ray
             const intersects = raycaster.intersectObjects(planes);
 
             if (intersects.length > 0) {
-                clickedPlane = intersects[0].object; // Store the clicked plane
-                activeColorKey = clickedPlane.userData.color; // Set active color key from 3D plane click
-                numberInputModal.classList.add('visible'); // Show the modal
-                newNumberInput.value = currentNumbers[activeColorKey]; // Pre-fill with current number
-                newNumberInput.focus(); // Focus the input field
-                errorMessageDiv.textContent = ''; // Clear any previous error messages
+                clickedPlane = intersects[0].object;
+                activeColorKey = clickedPlane.userData.color;
+                numberInputModal.classList.add('visible');
+                newNumberInput.value = ''; // Set input to empty
+                newNumberInput.focus();
+                errorMessageDiv.textContent = '';
             }
         }
-        window.addEventListener('click', onDocumentMouseDown, false);
         
+        // Use 'pointerdown' for unified mouse and touch handling
+        window.addEventListener('pointerdown', onPointerDown, false);
+
         // Add event listener for 'keydown' on the input field
         newNumberInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                const newValue = parseInt(newNumberInput.value);
+                const inputValue = newNumberInput.value.trim(); // Get trimmed value
+
+                if (inputValue === '') { // If input is empty, close modal without changing
+                    numberInputModal.classList.remove('visible');
+                    clickedPlane = null;
+                    activeColorKey = null;
+                    newNumberInput.blur();
+                    errorMessageDiv.textContent = '';
+                    return;
+                }
+
+                const newValue = parseInt(inputValue);
 
                 // Validar o número de entrada
                 if (isNaN(newValue) || newValue < 0 || newValue > 255) {
@@ -646,7 +670,7 @@ for (let col = 0; col < totalCols; col++) {
                 
                 // Show the modal and pre-fill the input
                 numberInputModal.classList.add('visible');
-                newNumberInput.value = currentNumbers[activeColorKey];
+                newNumberInput.value = ''; // Set input to empty
                 newNumberInput.focus();
                 errorMessageDiv.textContent = ''; // Clear any previous error messages
             }
@@ -699,8 +723,26 @@ for (let col = 0; col < totalCols; col++) {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            // Adjust RGB display position for smaller screens
+            if (window.innerWidth < 768) { // Example breakpoint for mobile
+                rgbDisplayDiv.style.top = 'auto';
+                rgbDisplayDiv.style.bottom = '10px';
+                rgbDisplayDiv.style.right = '10px';
+                rgbDisplayDiv.style.left = '10px';
+                rgbDisplayDiv.style.textAlign = 'center';
+                rgbDisplayDiv.style.fontSize = '20px'; // Slightly smaller font for mobile
+            } else {
+                rgbDisplayDiv.style.top = '650px'; // Original desktop position
+                rgbDisplayDiv.style.bottom = 'auto';
+                rgbDisplayDiv.style.right = '30px';
+                rgbDisplayDiv.style.left = 'auto';
+                rgbDisplayDiv.style.textAlign = 'initial';
+                rgbDisplayDiv.style.fontSize = '24px';
+            }
         }
         window.addEventListener('resize', onWindowResize, false);
+        onWindowResize(); // Call it once to set initial position based on screen size
 
         // Start the animation
         animate();
