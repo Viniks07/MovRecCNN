@@ -88,11 +88,11 @@ Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional 
 
 >Caso queira ver de maneira interativa como pode ser pensado esses tipos de [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html).
 
-Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em **processamento de imagens** e **aprendizado de máquina**. A matriz não é apenas uma forma de organizar os pixels, mas sim a base que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
+Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em **processamento de imagens** e **aprendizado de máquina**. A matriz não é apenas uma forma de organizar os pixels, mas sim a estrutura que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
 
 # **Pré-Processamento**
 
-Após uma breve explicação sobre matrizes, entraremos de fato na primeira etapa do projeto: o pré-processamento. Nesta fase, veremos código real e exploraremos as funções que foram criadas e implementadas por mim. Para isso, utilizaremos a melhor biblioteca do `Python` — na minha humilde opinião — o **`NumPy`**.  
+Após uma breve explicação sobre matrizes, entraremos de fato na primeira etapa do projeto: o pré-processamento. Nesta fase, veremos código de fato e exploraremos as funções que foram criadas e implementadas por mim. Para isso, utilizaremos a melhor biblioteca do `Python` — na minha opinião, é claro  — o **`NumPy`**.  
 
 Todas essas funções foram criadas para auxiliar o processo e todas se encontram no modulo **[data_processing.py](https://github.com/Viniks07/MovRecCNN/blob/main/src/data_processing.py)**
 
@@ -108,15 +108,13 @@ A primeira função criada foi a de espelhamento, pois estamos acostumados a nos
 
 ## Gray Scale
 
-A segunda função multiplica o vetor de canais de cor por uma matriz (*vetor-coluna*) de pesos pré-estabelecida. Pelas propriedades da multiplicação matricial, o resultado é um escalar que corresponde ao valor em escala de cinza.
+A segunda função multiplica o vetor de canais de cor por uma matriz (*vetor-coluna*) de pesos padronizada(***NTSC***). Pelas propriedades da multiplicação matricial, o resultado é um escalar que corresponde ao valor em escala de cinza.
 
 Matematicamente:
 
 ![Gray Scale Formula](media/image/grayscale_formula.png)  
 
-onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza.  
-
-<b>*Aviso</b> : <i>Apesar da matriz ser **RGB** o `OpenCv` lê as matrizes como **BGR**</i>
+onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza — *Apesar da matriz ser **RGB** o `OpenCv` lê as matrizes como **BGR** por isso invertemos os **canais de cor** e a matriz **NTSC***
 
 ![Nina Gray Scale](media/image/nina_grayscale.png)
 
