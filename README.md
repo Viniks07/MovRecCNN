@@ -9,7 +9,7 @@
 # **Apresentação**
 Olá! Meu nome é **[Vinícius Fonseca](https://www.linkedin.com/in/vinicius-silva-fonseca/)** e sou estudante de graduação em **Matemática** na **[UEL - Universidade Estadual de Londrina](https://portal.uel.br/conheca-a-uel/)**.  
 
-Desde o meu primeiro "Hello World!" me apaixonei por programação — e desde então, não parei mais.  
+Sempre gostei de matemática, mas foi com a programação que percebi uma matemática além dos livros — uma que pode sair do papel e se tornar algo concreto. E o que mais me encantou foi justamente isso: transformar pensamentos e ideias em soluções reais.
 
 Naturalmente, a proximidade entre Matemática e Ciência de Dados me levou a aprender ``Python`` e, com ele, as principais bibliotecas da área:
 
@@ -239,14 +239,6 @@ Assim, garantimos que o modelo aprenda somente as poses e não use a posição d
 ![Wave Centralized](media/image/wave_centralize.gif)
 
 # Data Set
-
-
-![Work Work](media/image/work_work.gif)
-
-
-
-[**WORK WORK  . . .**](https://www.youtube.com/watch?v=eO6OaVnbqaY)
-# A CNN
 
 
 ![Work Work](media/image/work_work.gif)
