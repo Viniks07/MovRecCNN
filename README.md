@@ -126,18 +126,18 @@ A remoção do fundo foi, sem dúvida, o maior desafio desta etapa do projeto. E
 A primeira abordagem que implementei foi um método de **``Chroma Key``**, que removia a cor de fundo dinamicamente, baseando-se no **desvio padrão de um valor RGB** capturado dentro de uma região delimitada por outra função chamada ``Target``. Essa função analisava todos os pixels contidos dentro do quadrado gerado para definir a cor a ser excluída.
 
 
-Apesar de ser uma solução criativa, essa abordagem apresentava uma limitação significativa: ela dependia do uso de uma cor sólida e dentro de um espectro de cores bastante específico, o que restringia seu uso.
+Apesar de ser uma solução criativa, essa abordagem apresentava uma limitação significativa: ela dependia de um fundo de cor sólida e em um espectro de cores bastante específico, o que restringia seu uso.
 
 Depois de pesquisar, encontrei uma alternativa que atendeu muito melhor ao propósito: a técnica de ``Background Subtraction``.
 
 
 A ideia é simples, mas eficaz:
 
-1. Assume-se uma câmera estática.
+1. Assume-se um **fundo estático**.
 
-2. Um frame vazio (sem o objeto de interesse) é capturado como referência.
+2. Um **frame vazio** (sem o objeto de interesse) é capturado como referência.
 
-3. A partir desse frame de referência, um limite é definido. Qualquer pixel nos frames subsequentes que varie menos que esse limite em comparação com o frame de referência é considerado parte do fundo e é "apagado".
+3. A partir desse frame de referência, um **limiar** é definido. Qualquer pixel nos frames subsequentes que tenha **variação menor** que esse limiar em comparação com o frame de referência é considerado parte do fundo e é "**apagado**".
 
 Dessa forma, quando o fundo é igual ao frame de referência, a tela permanece preta. Mas assim que um objeto entra em cena, seus pixels diferem do frame de referência, fazendo com que o objeto se destaque na imagem. Essa abordagem provou ser muito mais robusta para a detecção de movimento em vídeos.
 
@@ -147,9 +147,9 @@ Dessa forma, quando o fundo é igual ao frame de referência, a tela permanece p
 
 Após a remoção do fundo, a imagem é **binarizada** — *objeto vs. fundo*.
 
-- Todos os pixels pertencentes ao fundo permanecem ($0$).
+- Todos os pixels pertencentes ao fundo permanecem **preto** (**0**).
 
-- O objeto destacado recebe um valor de contraste máximo, normalmente branco ($255$).
+- O objeto destacado recebe um valor de contraste **máximo**, normalmente **branco** (**255**).
 
 Essa binarização facilita os proximos passos — como segmentação, contorno e detecção de movimento.
 
