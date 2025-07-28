@@ -21,7 +21,7 @@ Naturalmente, a proximidade entre Matemática e Ciência de Dados me levou a apr
 
 As três primeiras foram fundamentais no desenvolvimento do meu projeto ***Uso de LLMs para Detecção de Fake News no Brasil***, no qual utilizei LLMs para gerar embeddings com o Ollama e os classifiquei com um Random Forest Classifier do `scikit-learn`, alcançando métricas **f**<sub>1</sub>**-macro**  entre ***88%*** (pior cenário) e ***99%*** (cenário ideal).
 
->Confira o projeto aqui **→** [LLM4FakeNews](https://github.com/Viniks07/LLM4FakeNews)   
+>Confira o projeto aqui —> [LLM4FakeNews](https://github.com/Viniks07/LLM4FakeNews)   
 
 Embora esse projeto tenha trazido grandes aprendizados, meu principal interesse sempre foi a área de **Visão Computacional**.  
 
@@ -86,7 +86,7 @@ Outra maneira de pensarmos essa matriz RGB é imaginar uma matriz bidimensional 
 
 ![RGP Representado por lista](media/image/rgb_list_representation.png)
 
->Caso queira ver de maneira interativa como pode ser pensado esses tipos de [pixel](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html).
+>Visualize na prática como os pixels são estruturados em RGB — veja o código que criei para ilustrar —> [clique aqui](https://viniks07.github.io/MovRecCNN/media/html/simulador_de_pixel.html)
 
 Compreender a estrutura matricial será fundamental para o entendimento deste projeto especialmente em **processamento de imagens** e **aprendizado de máquina**. A matriz não é apenas uma forma de organizar os pixels, mas sim a estrutura que possibilita manipulações, análises e transformações visuais. Agora que entendemos como uma imagem pode ser representada por uma matriz — seja em escala de cinza ou em cores RGB —, estamos prontos para explorar como operar sobre esses dados e extrair informações úteis a partir deles.
 
