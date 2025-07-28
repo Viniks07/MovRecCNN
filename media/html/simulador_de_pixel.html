@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de pixel</title>
     <style>
-        /* Remove margem e preenchimento para que o canvas ocupe a tela inteira */
         body {
             margin: 0;
-            overflow: hidden; /* Evita barras de rolagem */
+            overflow: hidden;
             font-family: Arial, sans-serif;
         }
-        /* O canvas onde a cena 3D será renderizada */
         canvas {
             display: block;
-            touch-action: none; /* Prevent browser touch actions like scrolling/zooming */
+            touch-action: none;
         }
-        /* Estilos para o modal de entrada de número */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -28,7 +25,7 @@
             justify-content: center;
             align-items: center;
             z-index: 200;
-            visibility: hidden; /* Escondido por padrão */
+            visibility: hidden;
             opacity: 0;
             transition: visibility 0s, opacity 0.3s ease-in-out;
         }
@@ -81,35 +78,31 @@
         .modal-content button:hover {
             background-color: #0056b3;
         }
-        /* Remove as setas do campo de número para navegadores WebKit (Chrome, Safari, Edge) */
         .modal-content input[type="number"]::-webkit-outer-spin-button,
         .modal-content input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none; /* Remove a aparência padrão do botão */
-            margin: 0; /* Garante que nenhum espaço extra seja deixado */
+            -webkit-appearance: none;
+            margin: 0;
         }
 
-        /* Remove as setas do campo de número para Firefox */
         .modal-content input[type="number"] {
-            -moz-appearance: textfield; /* Instrui o Firefox a tratar o campo como um campo de texto normal */
+            -moz-appearance: textfield;
         }
         .error-message {
-            color: #ff4d4d; /* Cor vermelha para mensagens de erro */
+            color: #ff4d4d;
             margin-bottom: 15px;
             font-size: 14px;
-            min-height: 18px; /* Garante que o espaço seja reservado */
+            min-height: 18px;
         }
 
-        /* Estilos para o display RGB */
         #rgbDisplay {
             position: absolute;
-            top: 650px; /* Movido para baixo */
-            right: 30px; /* Movido para a esquerda */
+            top: 650px;
+            right: 30px;
             font-size: 24px;
             font-family: Arial, sans-serif;
             padding: 10px;
-            background-color: rgba(0, 0, 0, 0); /* Fundo semi-transparente para legibilidade */
+            background-color: rgba(0, 0, 0, 0);
             border-radius: 5px;
-            /* A cor será definida por spans internos */
             z-index: 100;
         }
         .rgb-bracket, .rgb-comma {
@@ -117,15 +110,15 @@
         }
         .rgb-red {
             color: red;
-            cursor: pointer; /* Adicionado para indicar que é clicável */
+            cursor: pointer;
         }
         .rgb-green {
             color: green;
-            cursor: pointer; /* Adicionado para indicar que é clicável */
+            cursor: pointer;
         }
         .rgb-blue {
             color: blue;
-            cursor: pointer; /* Adicionado para indicar que é clicável */
+            cursor: pointer;
         }
     </style>
 </head>
@@ -136,16 +129,16 @@
 
 <style>
     #info {
-        position: absolute; /* Posição absoluta para sobrepor o canvas */
-        top: 10px; /* Distância do topo */
-        width: 100%; /* Ocupa toda a largura */
-        text-align: center; /* Centraliza o texto */
-        font-size: 32px; /* Tamanho da fonte */
-        font-family: Arial, sans-serif; /* Define a fonte */
-        padding: 10px; /* Adiciona um pouco de espaço ao redor do texto */
-        color: white; /* Cor do texto inicial */
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Sombra para o texto */
-        z-index: 100; /* Garante que o texto esteja acima do canvas */
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        font-size: 32px;
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        z-index: 100;
     }
 </style>
 
@@ -162,81 +155,55 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
-        // --- Configuração Inicial ---
-        // Scene: The container for all 3D objects.
         const scene = new THREE.Scene();
-        // scene.background será definido dinamicamente com base nos valores RGB
-        // Camera: Defines the viewpoint of the scene.
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         
-        // Renderer: "Draws" the scene on the screen.
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
-        // Controls: Allow interaction with the scene using the mouse.
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.screenSpacePanning = false;
-        const fixedCameraRadius = 20; // Raio fixo para a câmera
-        controls.minDistance = fixedCameraRadius; // Allow closer zoom
-        controls.maxDistance = fixedCameraRadius; // Limit max zoom
+        const fixedCameraRadius = 20;
+        controls.minDistance = fixedCameraRadius;
+        controls.maxDistance = fixedCameraRadius;
         
-        controls.minPolarAngle = 0; // Não permite olhar para baixo
-        controls.maxPolarAngle = Math.PI / 2; // Não permite olhar para baixo (máximo 90 graus)
-        controls.minAzimuthAngle = 0; // Limita rotação horizontal à esquerda
-        controls.maxAzimuthAngle = Math.PI / 2; // Limita rotação horizontal à direita
+        controls.minPolarAngle = 0;
+        controls.maxPolarAngle = Math.PI / 2;
+        controls.minAzimuthAngle = 0;
+        controls.maxAzimuthAngle = Math.PI / 2;
 
-        // --- Definir a posição inicial da câmera ---
-        // -45º no plano zx (azimute) e +45º no plano xy (polar)
-        const initialAzimuth = THREE.MathUtils.degToRad(45); // -45 graus em radianos
-        const initialPolar = THREE.MathUtils.degToRad(60); // +45 graus em radianos
+        const initialAzimuth = THREE.MathUtils.degToRad(45);
+        const initialPolar = THREE.MathUtils.degToRad(60);
 
-        // Calcular a posição da câmera com base nas coordenadas esféricas
         const x = fixedCameraRadius * Math.sin(initialPolar) * Math.sin(initialAzimuth);
         const y = fixedCameraRadius * Math.cos(initialPolar);
         const z = fixedCameraRadius * Math.sin(initialPolar) * Math.cos(initialAzimuth);
 
         camera.position.set(x, y, z);
-        controls.update(); // Atualizar os controles para refletir a nova posição da câmera
+        controls.update();
 
 
-        // --- Lighting ---
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
         scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(5, 5, 5); // Adjust light position for multiple objects
+        directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
 
-        // --- Three Plane Creation ---
-        const planeSize = 2; // Size for each individual square
+        const planeSize = 2;
         const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
-        const spacingZ = 1.5; // Spacing between main squares along the Z-axis
-        const dotOffset = planeSize / 2 + 0.1; // Offset for dots from squares
+        const spacingZ = 1.5;
+        const dotOffset = planeSize / 2 + 0.1;
 
-        // Array to store planes for click detection
         const planes = [];
-        // Object to store current text meshes, indexed by plane color key
         const numberMeshes = {};
-        // Object to store current numbers for each plane
         const currentNumbers = {};
 
-        // Variable to hold the currently clicked plane (for 3D squares)
         let clickedPlane = null;
-        // New variable to track which color is being edited from RGB display (still used for modal logic)
         let activeColorKey = null;
 
-        // --- Function to get a random number for initial RGB values ---
-
-
-        // --- Function to Create Text Mesh for Square Numbers ---
-        /**
-         * Creates a 3D mesh with text "painted" on it for the main squares.
-         * @param {string} message - The text to be displayed.
-         * @param {number} basePlaneSize - The size of the plane this text will be on (for scaling).
-         * @returns {THREE.Mesh} - The mesh object with the text.
-         */
         function createSquareNumberTextMesh(message, basePlaneSize) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -247,7 +214,7 @@
             canvas.width = textWidth + 40;
             canvas.height = fontsize + 40;
             context.font = `Bold ${fontsize}px Arial`;
-            context.fillStyle = "rgba(255, 255, 255, 1.0)"; // White text for main squares
+            context.fillStyle = "rgba(255, 255, 255, 1.0)";
             context.textAlign = 'center';
             context.textBaseline = 'middle';
             context.fillText(message, canvas.width / 2, canvas.height / 2);
@@ -266,7 +233,6 @@
             return mesh;
         }
 
-        // --- Function to create a text sprite for axes labels and graduations ---
         function createTextSprite(message, color = 'white', fontSize = 15) {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -288,17 +254,7 @@
             return sprite;
         }
 
-        // --- Add White Numbers to Each Square ---
-        /**
-         * Adds or updates the text mesh for a specific plane.
-         * @param {string} colorKey - The key identifying the square (e.g., 'red', 'red-side').
-         * @param {number} value - The numeric value to be displayed.
-         * @param {number} x - X position of the square.
-         * @param {number} y - Y position of the square.
-         * @param {number} z - Z position of the square.
-         */
         function updateNumberMesh(colorKey, value, x, y, z) {
-            // Remove the old text mesh if it exists
             if (numberMeshes[colorKey]) {
                 scene.remove(numberMeshes[colorKey]);
                 numberMeshes[colorKey].geometry.dispose();
@@ -306,21 +262,11 @@
             }
 
             const newNumberMesh = createSquareNumberTextMesh(value.toString(), planeSize);
-            newNumberMesh.position.set(x, y, z + 0.01); // Slight Z offset to prevent z-fighting
+            newNumberMesh.position.set(x, y, z + 0.01);
             scene.add(newNumberMesh);
-            numberMeshes[colorKey] = newNumberMesh; // Store the new text mesh
+            numberMeshes[colorKey] = newNumberMesh;
         }
 
-        /**
-         * Creates a square (plane) and its associated number text.
-         * @param {string} colorKey - Unique key for the square (e.g., 'red', 'red-side', 'red-bottom').
-         * @param {number} initialNumber - The starting number for the square.
-         * @param {number} x - X position of the square.
-         * @param {number} y - Y position of the square.
-         * @param {number} z - Z position of the square.
-         * @param {number} materialColorHex - Hexadecimal color for the square's material.
-         * @returns {THREE.Mesh} - The created mesh object.
-         */
         function createInteractiveSquare(colorKey, initialNumber, x, y, z, materialColorHex) {
             const material = new THREE.MeshStandardMaterial({
                 color: materialColorHex,
@@ -330,50 +276,40 @@
             });
             const plane = new THREE.Mesh(planeGeometry, material);
             plane.position.set(x, y, z);
-            plane.userData.color = colorKey; // Store unique key
-            plane.userData.position = new THREE.Vector3(x, y, z); // Store position for later use
+            plane.userData.color = colorKey;
+            plane.userData.position = new THREE.Vector3(x, y, z);
             planes.push(plane);
             scene.add(plane);
 
             currentNumbers[colorKey] = initialNumber;
-            updateNumberMesh(colorKey, initialNumber, x, y, z); // Update text
+            updateNumberMesh(colorKey, initialNumber, x, y, z);
             return plane;
         }
 
-        /**
-         * Creates a colored dot (sphere) and adds it to the scene.
-         * @param {number} colorHex - Hexadecimal color for the dot.
-         * @param {number} x - X position of the dot.
-         * @param {number} y - Y position of the dot.
-         * @param {number} z - Z position of the dot.
-         */
         function createColoredDot(colorHex, x, y, z) {
-            const dotGeometry = new THREE.SphereGeometry(0.1, 16, 16); // Small sphere for the dot
+            const dotGeometry = new THREE.SphereGeometry(0.1, 16, 16);
             const dotMaterial = new THREE.MeshBasicMaterial({ color: colorHex });
             const dot = new THREE.Mesh(dotGeometry, dotMaterial);
             dot.position.set(x, y, z);
             scene.add(dot);
         }
 
-        // --- Create the 3 main colored squares ---
         const redPlane = createInteractiveSquare('red', 255, 0, 0, -spacingZ, 0xff0000);
         const greenPlane = createInteractiveSquare('green', 255, 0, 0, 0, 0x00ff00);
         const bluePlane = createInteractiveSquare('blue', 255, 0, 0, spacingZ, 0x0000ff);
 
-const totalCols = 6;  // Quantas "colunas" (anda para o lado e cria pontos)
-const spacingX = 2; // Passo horizontal entre colunas
-const spacingY = 2;   // Espaço vertical entre pontos
+const totalCols = 6;
+const spacingX = 2;
+const spacingY = 2;
 
 
 
 for (let col = 0; col < totalCols; col++) {
     const x = col * spacingX;
 
-    // Cria os 6 pontos para baixo
     for (let row = 0; row < 6; row++) {
         const y = -row * spacingY;
 
-        // Evita criar no ponto (0, 0, -spacingZ)
         if (!(x === 0 && y === 0)) {
             const radius = 0.2 / (col/2 + row/2 + 1);
             const geometry = new THREE.SphereGeometry(radius, 16, 16);
@@ -386,18 +322,17 @@ for (let col = 0; col < totalCols; col++) {
 }
 
 for (let col = 0; col < totalCols; col++) {
-    const x = col * spacingX;  // colunas avançam no X
+    const x = col * spacingX;
 
     for (let row = 0; row < 6; row++) {
-        const y = -row * spacingY;  // dentro da coluna, descem no Y
+        const y = -row * spacingY;
 
-        // Se quiser evitar o ponto (0, 0, 0):
         if (!(x === 0 && y === 0)) {
             const radius = 0.2 / (col/2 + row/2 + 1);
             const geometry = new THREE.SphereGeometry(radius, 16, 16);
             const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
             const sphere = new THREE.Mesh(geometry, material);
-            sphere.position.set(x, y, 0);  // Z fixo em 0, plano XY
+            sphere.position.set(x, y, 0);
             scene.add(sphere);
         }
     }
@@ -421,17 +356,14 @@ for (let col = 0; col < totalCols; col++) {
 }
 
 
-        // --- Add Axes with Labels and Graduations ---
-        // Keeping axis definition as per user's instruction "não altere os eixos (tamanhp nem posiçã)"
-        const AXIS_LENGTH = 6; // Length of the axes
+        const AXIS_LENGTH = 6;
         const AXIS_START_X = -2;
         const AXIS_START_Y = 1;
         const AXIS_START_Z = -2;
-        const LABEL_OFFSET = 0.5; // Offset for labels from axis end
-        const GRAD_OFFSET = 0.2; // Offset for graduation numbers from axis
+        const LABEL_OFFSET = 0.5;
+        const GRAD_OFFSET = 0.2;
 
-        // Z-axis (canal)
-        const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+        const zAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
         const zAxisLinePoints = [];
         const zEnd = 4;
         zAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y, AXIS_START_Z - 0.5));
@@ -439,8 +371,8 @@ for (let col = 0; col < totalCols; col++) {
         const zAxisLineGeometry = new THREE.BufferGeometry().setFromPoints(zAxisLinePoints);
         const zAxisLine = new THREE.Line(zAxisLineGeometry, zAxisMaterial);
         scene.add(zAxisLine);
-        const sphereGeometry = new THREE.SphereGeometry(0.07,16, 16); // raio pequeno
-        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Preto
+        const sphereGeometry = new THREE.SphereGeometry(0.07,16, 16);
+        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
         const canalPoint = new THREE.Mesh(sphereGeometry, sphereMaterial);
         canalPoint.position.set(AXIS_START_X, AXIS_START_Y, zEnd-2.5);
         scene.add(canalPoint);
@@ -453,8 +385,7 @@ for (let col = 0; col < totalCols; col++) {
             scene.add(gradLabel);
         }
 
-        // X-axis (coluna)
-        const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+        const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
         const xAxisLinePoints = [];
         const X_CONTINUO_FINAL = 5;
         xAxisLinePoints.push(new THREE.Vector3(AXIS_START_X - 0.5, AXIS_START_Y, AXIS_START_Z));
@@ -485,8 +416,7 @@ for (let col = 0; col < totalCols; col++) {
             scene.add(gradLabel);
         }
 
-        // Y-axis (linha)
-        const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 }); // Preto
+        const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
         const yAxisLinePoints = [];
         const Y_CONTINUO_FINAL = -5;
         yAxisLinePoints.push(new THREE.Vector3(AXIS_START_X, AXIS_START_Y + 0.5, AXIS_START_Z));
@@ -513,31 +443,28 @@ for (let col = 0; col < totalCols; col++) {
         scene.add(linhasLabel);
         for (let i = 0; i <= 2; i++) {
             const gradLabel = createTextSprite(i.toString(), 'black', 36);
-            gradLabel.position.set(AXIS_START_X, AXIS_START_Y -2*i-2, AXIS_START_Z - GRAD_OFFSET); // Position at absolute 1,2,3
+            gradLabel.position.set(AXIS_START_X, AXIS_START_Y -2*i-2, AXIS_START_Z - GRAD_OFFSET);
             scene.add(gradLabel);
         }
 
 
-        // --- Click Interactivity and Modal ---
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
         const numberInputModal = document.getElementById('numberInputModal');
         const newNumberInput = document.getElementById('newNumberInput');
-        const errorMessageDiv = document.getElementById('errorMessage'); // Get the error message div
-        const infoDiv = document.getElementById('info'); // Get the info div
-        const rgbDisplayDiv = document.getElementById('rgbDisplay'); // Get the RGB display div
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const infoDiv = document.getElementById('info');
+        const rgbDisplayDiv = document.getElementById('rgbDisplay');
 
         function onPointerDown(event) {
-            event.preventDefault(); // Prevent default browser actions (like scrolling/zooming)
+            event.preventDefault();
 
             let clientX, clientY;
 
             if (event.touches && event.touches.length > 0) {
-                // Handle touch events
                 clientX = event.touches[0].clientX;
                 clientY = event.touches[0].clientY;
             } else {
-                // Handle mouse events
                 clientX = event.clientX;
                 clientY = event.clientY;
             }
@@ -553,21 +480,19 @@ for (let col = 0; col < totalCols; col++) {
                 clickedPlane = intersects[0].object;
                 activeColorKey = clickedPlane.userData.color;
                 numberInputModal.classList.add('visible');
-                newNumberInput.value = ''; // Set input to empty
+                newNumberInput.value = '';
                 newNumberInput.focus();
                 errorMessageDiv.textContent = '';
             }
         }
         
-        // Use 'pointerdown' for unified mouse and touch handling
         window.addEventListener('pointerdown', onPointerDown, false);
 
-        // Add event listener for 'keydown' on the input field
         newNumberInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                const inputValue = newNumberInput.value.trim(); // Get trimmed value
+                const inputValue = newNumberInput.value.trim();
 
-                if (inputValue === '') { // If input is empty, close modal without changing
+                if (inputValue === '') {
                     numberInputModal.classList.remove('visible');
                     clickedPlane = null;
                     activeColorKey = null;
@@ -578,49 +503,42 @@ for (let col = 0; col < totalCols; col++) {
 
                 const newValue = parseInt(inputValue);
 
-                // Validar o número de entrada
                 if (isNaN(newValue) || newValue < 0 || newValue > 255) {
                     errorMessageDiv.textContent = 'Insira um número entre 0 e 255.';
-                    return; // Não faz nada se a validação falhar
+                    return;
                 }
 
-                // Se a validação passar
-                if (activeColorKey) { // Use activeColorKey to determine which color to update
-                    currentNumbers[activeColorKey] = newValue; // Atualiza o número
-                    // Update the 3D text mesh based on the active color key and its stored position
-                    // Retrieve position from the clickedPlane's userData
+                if (activeColorKey) {
+                    currentNumbers[activeColorKey] = newValue;
                     const { x, y, z } = clickedPlane.userData.position; 
                     updateNumberMesh(activeColorKey, currentNumbers[activeColorKey], x, y, z);
                 }
 
-                // Fechar o modal e limpar o campo de entrada
-                numberInputModal.classList.remove('visible'); // Esconde o modal
-                clickedPlane = null; // Limpar a referência ao plano clicado
-                activeColorKey = null; // Limpar a chave de cor ativa
-                newNumberInput.blur(); // Remove o foco (isso tira o cursor de texto)
-                errorMessageDiv.textContent = ''; // Limpa qualquer mensagem de erro
+                numberInputModal.classList.remove('visible');
+                clickedPlane = null;
+                activeColorKey = null;
+                newNumberInput.blur();
+                errorMessageDiv.textContent = '';
             }
         });
 
-        // Optional: Hide modal if clicking outside or pressing Escape
         numberInputModal.addEventListener('click', (event) => {
             if (event.target === numberInputModal) {
                 numberInputModal.classList.remove('visible');
-                clickedPlane = null; // Reset for plane clicks
-                activeColorKey = null; // Reset for RGB display clicks
-                errorMessageDiv.textContent = ''; // Clear error message on close
+                clickedPlane = null;
+                activeColorKey = null;
+                errorMessageDiv.textContent = '';
             }
         });
         window.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && numberInputModal.classList.contains('visible')) {
                 numberInputModal.classList.remove('visible');
-                clickedPlane = null; // Reset for plane clicks
-                activeColorKey = null; // Reset for RGB display clicks
-                errorMessageDiv.textContent = ''; // Clear error message on close
+                clickedPlane = null;
+                activeColorKey = null;
+                errorMessageDiv.textContent = '';
             }
         });
 
-        // --- Cursor change on hover for 3D squares ---
         function onMouseMove(event) {
             const rect = renderer.domElement.getBoundingClientRect();
             mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -637,80 +555,64 @@ for (let col = 0; col < totalCols; col++) {
         }
         window.addEventListener('mousemove', onMouseMove, false);
 
-        // --- START: NEW CODE FOR RGB DISPLAY INTERACTIVITY ---
-
-        // Create the static structure for the RGB display
         rgbDisplayDiv.innerHTML = `
             <span class="rgb-bracket">[</span><span id="rgb-red-val" class="rgb-red" title="Alterar valor de Vermelho"></span><span class="rgb-comma">,</span><span id="rgb-green-val" class="rgb-green" title="Alterar valor de Verde"></span><span class="rgb-comma">,</span><span id="rgb-blue-val" class="rgb-blue" title="Alterar valor de Azul"></span><span class="rgb-bracket">]</span>`;
 
-        // Get the value spans
         const redValSpan = document.getElementById('rgb-red-val');
         const greenValSpan = document.getElementById('rgb-green-val');
         const blueValSpan = document.getElementById('rgb-blue-val');
 
-        // Function to handle clicks on the RGB values
         function openModalForRgb(event) {
             const targetId = event.target.id;
             let colorKey = null;
             
-            // Determine which color was clicked and set the corresponding plane as 'clickedPlane'
             if (targetId === 'rgb-red-val') {
                 colorKey = 'red';
-                clickedPlane = redPlane; // Set context for the modal
+                clickedPlane = redPlane;
             } else if (targetId === 'rgb-green-val') {
                 colorKey = 'green';
-                clickedPlane = greenPlane; // Set context for the modal
+                clickedPlane = greenPlane;
             } else if (targetId === 'rgb-blue-val') {
                 colorKey = 'blue';
-                clickedPlane = bluePlane; // Set context for the modal
+                clickedPlane = bluePlane;
             }
             
             if (colorKey) {
-                activeColorKey = colorKey; // Set the active color key for the update logic
+                activeColorKey = colorKey;
                 
-                // Show the modal and pre-fill the input
                 numberInputModal.classList.add('visible');
-                newNumberInput.value = ''; // Set input to empty
+                newNumberInput.value = '';
                 newNumberInput.focus();
-                errorMessageDiv.textContent = ''; // Clear any previous error messages
+                errorMessageDiv.textContent = '';
             }
         }
 
-        // Add event listeners to each color value span
         redValSpan.addEventListener('click', openModalForRgb);
         greenValSpan.addEventListener('click', openModalForRgb);
         blueValSpan.addEventListener('click', openModalForRgb);
 
-        // --- END: NEW CODE ---
-
-
-        // --- Animation Loop ---
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); // Atualiza o OrbitControls
+            controls.update();
 
-            // Define a cor de fundo da cena com base nos valores RGB atuais
             const r = currentNumbers.red / 255;
             const g = currentNumbers.green / 255;
             const b = currentNumbers.blue / 255;
             
-            // Garante que scene.background seja um objeto THREE.Color antes de chamar setRGB
             if (!(scene.background instanceof THREE.Color)) {
                 scene.background = new THREE.Color(); 
             }
             scene.background.setRGB(r, g, b);
 
-            // Atualiza a cor do texto do cabeçalho para contraste
-            const brightness = (r + g + b) / 3; // Média para determinar brilho
-            if (brightness > 0.5) { // Se a cor de fundo for clara
+            const brightness = (r + g + b) / 3;
+            if (brightness > 0.5) {
                 infoDiv.style.color = 'black';
-                infoDiv.style.textShadow = '1px 1px 2px rgba(255,255,255,0.5)'; // Sombra clara para texto escuro
-            } else { // Se a cor de fundo for escura
+                infoDiv.style.textShadow = '1px 1px 2px rgba(255,255,255,0.5)';
+            } else {
                 infoDiv.style.color = 'white';
-                infoDiv.style.textShadow = '1px 1px 2px rgba(0,0,0,0.5)'; // Sombra escura para texto claro
+                infoDiv.style.textShadow = '1px 1px 2px rgba(0,0,0,0.5)';
             }
 
-            // --- MODIFIED: Update the RGB display text content (instead of innerHTML) ---
             redValSpan.textContent = currentNumbers.red;
             greenValSpan.textContent = currentNumbers.green;
             blueValSpan.textContent = currentNumbers.blue;
@@ -718,22 +620,20 @@ for (let col = 0; col < totalCols; col++) {
             renderer.render(scene, camera);
         }
 
-        // --- Responsiveness ---
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
             
-            // Adjust RGB display position for smaller screens
-            if (window.innerWidth < 768) { // Example breakpoint for mobile
+            if (window.innerWidth < 768) {
                 rgbDisplayDiv.style.top = 'auto';
                 rgbDisplayDiv.style.bottom = '10px';
                 rgbDisplayDiv.style.right = '10px';
                 rgbDisplayDiv.style.left = '10px';
                 rgbDisplayDiv.style.textAlign = 'center';
-                rgbDisplayDiv.style.fontSize = '20px'; // Slightly smaller font for mobile
+                rgbDisplayDiv.style.fontSize = '20px';
             } else {
-                rgbDisplayDiv.style.top = '650px'; // Original desktop position
+                rgbDisplayDiv.style.top = '650px';
                 rgbDisplayDiv.style.bottom = 'auto';
                 rgbDisplayDiv.style.right = '30px';
                 rgbDisplayDiv.style.left = 'auto';
@@ -742,9 +642,8 @@ for (let col = 0; col < totalCols; col++) {
             }
         }
         window.addEventListener('resize', onWindowResize, false);
-        onWindowResize(); // Call it once to set initial position based on screen size
+        onWindowResize();
 
-        // Start the animation
         animate();
     </script>
 </body>
