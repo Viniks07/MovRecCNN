@@ -116,6 +116,7 @@ Matematicamente:
 
 onde $GS$ — um número decimal que é convertido para um inteiro — representa o tom de cinza — *Apesar da matriz ser **RGB** o `OpenCv` lê as matrizes como **BGR** por isso invertemos os **canais de cor** e a matriz **NTSC***
 
+
 ![Nina Gray Scale](media/image/nina_grayscale.png)
 
 ## Background Subtraction
@@ -158,7 +159,7 @@ Essa binarização facilita os proximos passos — como segmentação, contorno 
 
 ## Dilate
 
-Normalmente, após a binarização, a imagem destacada pode apresentar "buracos" — como, coincidentemente, aconteceu na imagem de referência — então aplicamos [Morfologia Matemática (***Dilatação***)](https://www.youtube.com/watch?v=E8cqrkK4L_M&list=PLLFpILRpgx7lJlHOl3TXGuUVWnqzgTITh&index=13) para preenchê-los.
+Normalmente, após a binarização, a imagem destacada pode apresentar "**buracos**" — como, coincidentemente, aconteceu na imagem de referência — então aplicamos [Morfologia Matemática (***Dilatação***)](https://www.youtube.com/watch?v=E8cqrkK4L_M&list=PLLFpILRpgx7lJlHOl3TXGuUVWnqzgTITh&index=13) para preenchê-los.
 
 ![Nina Dilatada](media/image/nina_dilate.png)
 
@@ -167,13 +168,14 @@ Normalmente, após a binarização, a imagem destacada pode apresentar "buracos"
 O downsampling foi o segundo grande desafio desta parte do projeto. Apesar de todos os processos de pré-processamento, não é viável usar a imagem completa como input do modelo. Pense na resolução que usamos aqui, de ($480 \times 640$), que corresponde a aproximadamente $\textbf{307}$ **mil pixels**!  
 Processar tantos dados seria ineficiente e pesado.
 
-É exatamente por isso que implementei a função ``down_sampling``. Ela é responsável por diminuir o tamanho da imagem. Basicamente, a função cria uma nova matriz em branco, cujo shape (***dimensões***) é o da imagem original dividido por um valor ``division``.
+É exatamente por isso que implementei a função ``Down Sampling``. Ela é responsável por diminuir a resolução da imagem. Basicamente, a função cria uma nova matriz em branco, cujo shape (***dimensões***) é o da imagem original dividido por um valor ``division``.
 
 Em seguida, ela percorre a imagem original usando uma "**janela**" (***matriz quadrada***) com o tamanho definido por ``division``. Para cada uma dessas janelas, a função calcula a média dos valores dos pixels contidos nela. Esse valor médio é então usado para preencher o pixel correspondente na matriz de amostra reduzida.
 
 Dessa forma, conseguimos uma representação menor da imagem, mantendo as informações essenciais, mas com um volume de dados muito mais adequado para as próximas etapas do projeto.
 
-*Ex:* $\ 480 \times 640\ (307\ mil\ pixels)  →  \ 30\times40\ (1200 \ pixels)$
+*Ex:* $\ 480 \times 640\ (307\ mil\ pixels)  →  \ 30\times40\ (1200 \ pixels)$  
+( $\mathbf{256x}$ **menor  que  a imgem original** )
 
 A função pode ser usada em ambos os formatos:
 
@@ -186,11 +188,11 @@ A função pode ser usada em ambos os formatos:
 
  ![Nina Downsample Gray](media/image/nina_downsample.png)
 
-<b>*Aviso</b> : <i>As referencias a direita não são os resultados reais eles são apenas representações(**visualizer**). As imagens reais são minúsculas comparadas a imagem original(***não processada***)</i>
+<b>*Reiterando</b> : <i>As referencias a direita não são os resultados reais eles são apenas representações(***visualizer***). As imagens reais são menores — $ \mathbf{256x}$ **menor como já foi dito** — comparadas a imagem **não** ***"Down Sampleada"***
 
 ## Bounding Box
 
-A bounding box é um retângulo que delimita o objeto de interesse em uma imagem, sendo usada para identificá-lo e localizar sua posição.
+A ``Bounding Box`` é um retângulo que delimita o objeto de interesse em uma imagem, sendo usada para identificá-lo e localizar sua posição.
 
 
 A função implementada identifica o objeto com base em uma imagem binarizada: ela procura as colunas e linhas onde o objeto aparece (ou seja, onde os pixels são diferentes de zero) e utiliza essas posições para construir os quatro lados do retângulo.
@@ -214,16 +216,16 @@ Antes de avançarmos, vamos rever o processo pelo qual cada frame passou. Isso n
 
 ## Centralize
 
-Chegamos agora à nossa última função de pré-processamento. A função ``centralize`` tem como objetivo **manter o objeto centralizado horizontalmente** na imagem.
+Chegamos agora à nossa última função de pré-processamento. A função ``Centralize`` tem como objetivo **manter o objeto centralizado horizontalmente** na imagem.
 
 Mas por que isso é necessário?
 
 Nosso objetivo é que o modelo aprenda a **reconhecer gestos**, e **não a posição do objeto na imagem**. Se não centralizarmos, o modelo pode acabar associando uma determinada posição à classe, e não ao gesto em si. Por exemplo, se uma pose for sempre feita no lado direito da imagem, o modelo poderá interpretar a **posição**, e não o **formato da pose**, como critério de classificação.
 
 
-O processo da função ``centralize`` segue os seguintes passos:
+O processo da função ``Centralize`` segue os seguintes passos:
 
-- Recorta o objeto com base nos vértices obtidos pela função ``bounding_box``.
+- Recorta o objeto com base nos vértices obtidos pela função ``Bounding Box``.
 
 - Calcula o **centro de massa horizontal** do objeto (*com base nos pixels brancos*).
 
