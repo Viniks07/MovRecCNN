@@ -53,7 +53,7 @@ o numero de linhas $\mathbf{(1080)}$. Porém, quando tratamos do
 ponto de vista algébrico — que é o nosso caso — a primeira
 dimensão será o número de linhas, e a segunda, o número de
 colunas, portanto, seu formato seria $\mathbf{(1080 \times 1920)}$.  
-( <u>***Mantenha isso em mente para evitar confusões***</u> )
+( <u>**Mantenha isso em mente para evitar confusões**</u> )
 
 Portanto a resolução é definida pela matriz ${m \times n}$, sendo ${m}$ o numero de linhas e ${n}$ o numero de colunas.
 
